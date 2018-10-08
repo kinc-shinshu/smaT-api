@@ -16,12 +16,12 @@ $ rails db:seed
 
 ## Endpoints
 
-- **[<code>POST</code> /rooms](#POST-rooms)**
-- **[<code>GET</code> /rooms/search](#POST-roomssearch)**
-- **[<code>GET</code> /rooms/:room_id/questions](#GET-roomsroom_idquestions)**
-- **[<code>POST</code> /rooms/:room_id/questions](#POST-roomsroom_idquestions)**
-- **[<code>PATCH</code> /rooms/:room_id/questions/:id](#PATCH-roomsroom_idquestionsid)**
-- **[<code>DELETE</code> /rooms/:room_id/questions/:id](#DELETE-roomsroom_idquestionsid)**
+- **[<code>POST</code> /rooms](#post-rooms)**
+- **[<code>GET</code> /rooms/search](#post-roomssearch)**
+- **[<code>GET</code> /rooms/:room_id/questions](#get-roomsroom_idquestions)**
+- **[<code>POST</code> /rooms/:room_id/questions](#post-roomsroom_idquestions)**
+- **[<code>PATCH</code> /rooms/:room_id/questions/:id](#patch-roomsroom_idquestionsid)**
+- **[<code>DELETE</code> /rooms/:room_id/questions/:id](#delete-roomsroom_idquestionsid)**
 
 ### POST /rooms
 
