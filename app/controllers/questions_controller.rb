@@ -11,8 +11,8 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    detele_question_id = params[:id]
-    question = Room.find(params[:room_id]).questions.find(detele_question_id).destroy
+    delete_question_id = params[:id]
+    question = Room.find(params[:room_id]).questions.find(delete_question_id).destroy
     render json: question
   end
 
