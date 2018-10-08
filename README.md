@@ -7,12 +7,14 @@ An API server of smaT for [shinshu-futureapp contest](https://shinshu-futureapp.
 - gem 2.7
 - bundler 1.16
 
+
 ## Install
 ```
 $ bundle install
 $ rails db:migrate
 $ rails db:seed
 ```
+
 
 ## Endpoints
 
@@ -25,17 +27,157 @@ $ rails db:seed
 
 ### POST /rooms
 
+If there is space, create a room.
 
-### POST /rooms/search
+#### Parameters
+
+| Name          | Description             |
+| ------------- | ----------------------- |
+| title         | A title of the room     |
+
+#### Example
+
+```
+$ curl -X POST localhost:3000/rooms -d "title=Math" | jq
+{
+  "name": "111",
+  "id": 1,
+  "title": "Math",
+  "status": 1,
+  "created_at": "2018-10-08T16:20:13.666Z",
+  "updated_at": "2018-10-08T16:20:26.529Z"
+}
+```
+
+
+### GET /rooms/search
+
+Judge whether there is a room having specific name.
+
+#### Parameters
+
+| Name          | Description                       |
+| ------------- | --------------------------------- |
+| q             | The name of room you want to know |
+
+#### Example
+
+```
+$ curl -X GET localhost:3000/rooms/search?q=111 | jq
+{
+  "name": "111",
+  "id": 1,
+  "title": "Math",
+  "status": 1,
+  "created_at": "2018-10-08T16:20:13.666Z",
+  "updated_at": "2018-10-08T16:20:26.529Z"
+}
+```
 
 
 ### GET /rooms/:room_id/questions
 
+Display a list of questions in a specific room.
+
+#### Example
+
+```
+$ curl -X GET localhost:3000/rooms/1/quiestions | jq
+[
+  {
+    "id": 1,
+    "text": "1+1=",
+    "answer": "2",
+    "room_id": 1,
+    "created_at": "2018-10-08T16:20:13.666Z",
+    "updated_at": "2018-10-08T16:20:26.529Z"
+  }, 
+  {
+    "id": 2,
+    "text": "2+2=",
+    "answer": "4",
+    "room_id": 1,
+    "created_at": "2018-10-08T16:20:13.666Z",
+    "updated_at": "2018-10-08T16:20:26.529Z"
+  },
+  {
+    "id": 3,
+    "text": "3+3=",
+    "answer": "6",
+    "room_id": 1,
+    "created_at": "2018-10-08T16:20:13.666Z",
+    "updated_at": "2018-10-08T16:20:26.529Z"
+  }
+]
+```
+
 
 ### POST /rooms/:room_id/questions
+
+Submit a question in a specific room.
+
+#### Parameters
+
+| Name          | Description                       |
+| ------------- | --------------------------------- |
+| text          | A sentence of the question        |
+| answer        | The answer of the quiestion       |
+
+#### Example
+
+```
+$ curl -X POST localhost:3000/rooms/1/questions -d "text=4+4=&answer=8" | jq
+{
+  "id": 4,
+  "text": "4+4=",
+  "answer": "8",
+  "room_id": 1,
+  "created_at": "2018-10-08T16:20:13.666Z",
+  "updated_at": "2018-10-08T16:20:26.529Z"
+}
+```
 
 
 ### PATCH /rooms/:room_id/questions/:id
 
+Update a specific question in a specific room.
+
+#### Parameters
+
+| Name          | Description                       |
+| ------------- | --------------------------------- |
+| text          | A sentence of the question        |
+| answer        | The answer of the quiestion       |
+
+#### Example
+
+```
+$ curl -X POST localhost:3000/rooms/1/questions/1 -d "text=5+5=&answer=10" | jq
+{
+  "id": 1,
+  "text": "5+5=",
+  "answer": "10",
+  "room_id": 1,
+  "created_at": "2018-10-08T16:20:13.666Z",
+  "updated_at": "2018-10-08T16:20:26.529Z"
+}
+```
+
 
 ### DELETE /rooms/:room_id/questions/:id
+
+Remove a specific question in a specific room.
+
+#### Example
+
+```
+$ curl -X POST localhost:3000/rooms/1/questions/1 | jq
+{
+  "id": 1,
+  "text": "5+5=",
+  "answer": "10",
+  "room_id": 1,
+  "created_at": "2018-10-08T16:20:13.666Z",
+  "updated_at": "2018-10-08T16:20:26.529Z"
+}
+```
