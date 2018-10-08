@@ -5,7 +5,7 @@ class RoomsController < ApplicationController
     if room.nil?
       render status: :forbidden
     elsif
-      room.update(title:params[:title], name:room.name, status: 1)
+      room.update(title: params[:title], name: room.name, status: 1)
       render json: room
     end
   end
