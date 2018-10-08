@@ -19,7 +19,7 @@ $ rails db:seed
 ## Endpoints
 
 - **[<code>POST</code> /rooms](#post-rooms)**
-- **[<code>GET</code> /rooms/search](#post-roomssearch)**
+- **[<code>GET</code> /rooms/search](#get-roomssearch)**
 - **[<code>GET</code> /rooms/:room_id/questions](#get-roomsroom_idquestions)**
 - **[<code>POST</code> /rooms/:room_id/questions](#post-roomsroom_idquestions)**
 - **[<code>PATCH</code> /rooms/:room_id/questions/:id](#patch-roomsroom_idquestionsid)**
@@ -34,6 +34,10 @@ If there is space, create a room.
 | Name          | Description             |
 | ------------- | ----------------------- |
 | title         | A title of the room     |
+
+#### Exception
+
+`503 Service Unavailable`: if there is no space for create a room.
 
 #### Example
 
@@ -59,6 +63,10 @@ Judge whether there is a room having specific name.
 | Name          | Description                       |
 | ------------- | --------------------------------- |
 | q             | The name of room you want to know |
+
+#### Exception
+
+`404 Not Found`: if the room having specific name not found.
 
 #### Example
 
