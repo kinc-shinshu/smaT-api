@@ -1,24 +1,41 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An API server of smaT for [shinshu-futureapp contest](https://shinshu-futureapp.net/). This API server is running on Ruby on Rails.
 
-Things you may want to cover:
+## Requirements
+- ruby 2.5
+- gem 2.7
+- bundler 1.16
 
-* Ruby version
+## Install
+```
+$ bundle install
+$ rails db:migrate
+$ rails db:seed
+```
 
-* System dependencies
+## Endpoints
 
-* Configuration
+- **[<code>POST</code> /rooms](POST/rooms)**
+- **[<code>GET</code> /rooms/search](POST/rooms/search)**
+- **[<code>GET</code> /rooms/:room_id/questions](GET/rooms/:room_id/questions)**
+- **[<code>POST</code> /rooms/:room_id/questions](POST/rooms/:room_id/questions)**
+- **[<code>PATCH</code> /rooms/:room_id/questions/:id](PATCH/rooms/:room_id/questions/:id)**
+- **[<code>DELETE</code> /rooms/:room_id/questions/:id](DELETE/rooms/:room_id/questions/:id)**
 
-* Database creation
+### POST/rooms
 
-* Database initialization
 
-* How to run the test suite
+### POST/rooms/search
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+### GET/rooms/:room_id/questions
 
-* ...
+
+### POST/rooms/:room_id/questions
+
+
+### PATCH/rooms/:room_id/questions/:id
+
+
+### DELETE/rooms/:room_id/questions/:id
