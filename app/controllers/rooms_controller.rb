@@ -10,7 +10,7 @@ class RoomsController < ApplicationController
     if room.nil?
       render status: :forbidden
     elsif
-      room.update(title: params[:title], name: room.name, status: 1)
+      room.update(title: params[:title], status: 1)
       render json: room
     end
   end
@@ -19,7 +19,8 @@ class RoomsController < ApplicationController
     close_room_id = params[:id]
     room = Room.find(close_room_id)
     room.questions.where(room_id: close_room_id).destroy_all
-    room.update(title: 'title', name: 'name', status: 0)
+    room.update(title: 'title', status: 0)
     render json: room
   end
+
 end
