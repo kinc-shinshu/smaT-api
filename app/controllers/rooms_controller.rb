@@ -18,6 +18,7 @@ class RoomsController < ApplicationController
   def destroy
     close_room_id = params[:id]
     room = Room.find(close_room_id)
+    room.questions.where(room_id: close_room_id).destroy_all
     room.update(title: 'title', name: 'name', status: 0)
     render json: room
   end
