@@ -29,8 +29,9 @@ class QuestionsController < ApplicationController
   def question_params
     question_text = params[:text]
     question_answer = params[:answer]
+    question_type = params[:question_type]
     question_room_id = :room_id
-    {text: question_text, answer: question_answer, room_id: question_room_id}
+    {text: question_text, answer: question_answer, type: question_type,room_id: question_room_id}
   end
 
   # 更新の場合のパラメータ
@@ -38,7 +39,8 @@ class QuestionsController < ApplicationController
   def question_params_for_update
     question_text = params[:text]
     question_answer = params[:answer]
-    {text: question_text, answer: question_answer}
+    question_type = params[:question_type]
+    {text: question_text, answer: question_answer, type: question_type}
   end
 
 end
