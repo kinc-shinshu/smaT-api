@@ -160,3 +160,15 @@ $ curl -X POST localhost:3000/rooms/1/questions/1 | jq
   "updated_at": "2018-10-08T16:20:26.529Z"
 }
 ```
+
+## Generate request spec
+
+```
+$ bundle exec rails g rspec:integration NAME
+```
+
+## Run specs
+
+```
+$ bundle exec rspec
+```
