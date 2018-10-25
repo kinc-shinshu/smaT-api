@@ -11,7 +11,7 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 # require "sprockets/railtie"
-require "rails/test_unit/railtie"
+# require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -31,5 +31,20 @@ module SmaTApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.time_zone = 'Asia/Tokyo'
+    config.active_record.default_timezone = :local
+
+    config.generators do |g|
+      g.test_framework(
+        :rspec,
+        fixtures: true,
+        controller_specs: true,
+        view_specs: false,
+        helper_specs: false,
+        routing_specs: false
+      )
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
+    end
   end
 end
