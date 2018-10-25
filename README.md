@@ -53,36 +53,6 @@ $ curl -X POST localhost:3000/rooms -d "title=Math" | jq
 }
 ```
 
-
-### GET /rooms/search
-
-Judge whether there is a room having specific name.
-
-#### Parameters
-
-| Name          | Description                       |
-| ------------- | --------------------------------- |
-| q             | The name of room you want to know |
-
-#### Exception
-
-`404 Not Found`: if the room having specific name not found.
-
-#### Example
-
-```
-$ curl -X GET localhost:3000/rooms/search?q=111 | jq
-{
-  "name": "111",
-  "id": 1,
-  "title": "Math",
-  "status": 1,
-  "created_at": "2018-10-08T16:20:13.666Z",
-  "updated_at": "2018-10-08T16:20:26.529Z"
-}
-```
-
-
 ### GET /rooms/:room_id/questions
 
 Display a list of questions in a specific room.
@@ -99,7 +69,7 @@ $ curl -X GET localhost:3000/rooms/1/quiestions | jq
     "room_id": 1,
     "created_at": "2018-10-08T16:20:13.666Z",
     "updated_at": "2018-10-08T16:20:26.529Z"
-  }, 
+  },
   {
     "id": 2,
     "text": "2+2=",
