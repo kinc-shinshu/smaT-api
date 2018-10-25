@@ -38,11 +38,12 @@ class QuestionsController < ApplicationController
 
   # 更新の場合のパラメータ
   # 将来的にパラメータが増える可能性あるので一応定義した
+  # TODO: rewrite with params.require.permit
+  #       if any params not specified, do not update it(dont replace as null)
   def question_params_for_update
     question_text = params[:text]
     question_answer = params[:answer]
     question_type = params[:question_type]
-    {text: question_text, answer: question_answer, type: question_type}
+    {text: question_text, answer: question_answer, question_type: question_type}
   end
-
 end
