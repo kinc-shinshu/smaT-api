@@ -26,12 +26,14 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  # TODO: rewrite with params.require.permit
   def question_params
     question_text = params[:text]
     question_answer = params[:answer]
     question_type = params[:question_type]
     question_room_id = :room_id
-    {text: question_text, answer: question_answer, type: question_type,room_id: question_room_id}
+    {text: question_text, answer: question_answer, question_type: question_type,room_id: question_room_id}
   end
 
   # 更新の場合のパラメータ

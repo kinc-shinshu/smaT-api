@@ -100,11 +100,12 @@ Submit a question in a specific room.
 | ------------- | --------------------------------- |
 | text          | A sentence of the question        |
 | answer        | The answer of the quiestion       |
+| question_type | Type of question e.g. '文章問題', '計算問題' |
 
 #### Example
 
 ```
-$ curl -X POST localhost:3000/rooms/1/questions -d "text=4+4=&answer=8" | jq
+$ curl -X POST localhost:3000/rooms/1/questions -d "text=4+4=&answer=8&question_type=計算問題" | jq
 {
   "id": 4,
   "text": "4+4=",
