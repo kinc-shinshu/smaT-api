@@ -28,3 +28,6 @@
 
 #customize
 /.idea
+
+# untrack vendor/bundle
+/vendor/bundle
