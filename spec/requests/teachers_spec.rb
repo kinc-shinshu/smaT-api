@@ -32,15 +32,16 @@ RSpec.describe 'Teachers API', type: :request do
 
   # this is test of authenticate
   describe 'GET /teachers/:id' do
+    let!(:teacher) { create(:teacher) }
+    let(:id) { teacher.id }
+    let(:token) { teacher.token }
+    let(:headers) { { 'Authorization' => "Token #{token}" } }
+
     context 'when token is taken' do
-      let!(:teacher) { create(:teacher) }
-      let(:id) { teacher.id }
-      let(:token) { teacher.token }
-      let(:headers) { { 'Authorization' => "Token #{token}" } }
       before { get "/teachers/#{id}", headers: headers }
 
-      it 'shows teacher detail' do
-        expect(json).to eq(teacher.to_json)
+      it 'can show teacher detail' do
+        expect(json['fullname']).to eq(teacher.fullname)
       end
 
       it 'returns status code 200' do
@@ -49,8 +50,10 @@ RSpec.describe 'Teachers API', type: :request do
     end
 
     context 'when token is not taken' do
+      before { get "/teachers/#{id}", headers: {} }
+
       it "shows 'Authentication required' message" do
-        expect(response.body).to match(/Authentication required/)
+        expect(json['message']).to match(/Authentication required/)
       end
 
       it 'returns status code 401' do
