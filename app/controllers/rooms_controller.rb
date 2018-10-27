@@ -1,5 +1,4 @@
 class RoomsController < ApplicationController
-
   def index
     room = Room.all
     render json: room
@@ -9,7 +8,7 @@ class RoomsController < ApplicationController
     room = Room.find_by(status: 0)
     if room.nil?
       render status: :forbidden
-    elsif
+    else
       room.update(title: params[:title], status: 1)
       render json: room
     end
@@ -22,5 +21,4 @@ class RoomsController < ApplicationController
     room.update(title: 'title', status: 0)
     render json: room
   end
-
 end
