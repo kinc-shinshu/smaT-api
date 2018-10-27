@@ -29,4 +29,33 @@ RSpec.describe 'Teachers API', type: :request do
       end
     end
   end
+
+  # this is test of authenticate
+  describe 'GET /teachers/:id' do
+    context 'when token is taken' do
+      let!(:teacher) { create(:teacher) }
+      let(:id) { teacher.id }
+      let(:token) { teacher.token }
+      let(:headers) { { 'Authorization' => "Token #{token}" } }
+      before { get "/teachers/#{id}", headers: headers }
+
+      it 'shows teacher detail' do
+        expect(json).to eq(teacher.to_json)
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when token is not taken' do
+      it "shows 'Authentication required' message" do
+        expect(response.body).to match(/Authentication required/)
+      end
+
+      it 'returns status code 401' do
+        expect(response).to have_http_status(401)
+      end
+    end
+  end
 end

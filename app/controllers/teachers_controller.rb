@@ -1,4 +1,7 @@
 class TeachersController < ApplicationController
+  before_action :authenticate, only: %i[show]
+
+  # show dashboard...?
   def show
   end
 
