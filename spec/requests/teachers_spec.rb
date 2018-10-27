@@ -49,6 +49,19 @@ RSpec.describe 'Teachers API', type: :request do
       end
     end
 
+    context 'when token is taken but id is invalid' do
+      let(:id) { 0 }
+      before { get "/teachers/#{id}", headers: headers }
+
+      it 'shows error messages' do
+        expect(json['message']).to match(/Couldn't find Teacher/)
+      end
+
+      it 'returns status 400' do
+        expect(response).to have_http_status(400)
+      end
+    end
+
     context 'when token is not taken' do
       before { get "/teachers/#{id}", headers: {} }
 

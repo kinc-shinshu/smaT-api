@@ -4,7 +4,8 @@ class TeachersController < ApplicationController
 
   # show dashboard...?
   def show
-    render json: @teacher
+    teacher = Teacher.find(params[:id])
+    render json: teacher
   end
 
   def create
@@ -24,8 +25,8 @@ class TeachersController < ApplicationController
 
   def authenticate_token
     authenticate_with_http_token do |token, _|
-      @teacher = Teacher.find_by!(token: token)
-      !@teacher.nil?
+      teacher = Teacher.find_by!(token: token)
+      !teacher.nil?
     end
   end
 
