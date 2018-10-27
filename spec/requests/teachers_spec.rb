@@ -3,8 +3,14 @@ require 'rails_helper'
 RSpec.describe 'Teachers API', type: :request do
   describe 'POST /teachers' do
     context 'when request is valid' do
-      let(:valid_params) { { fullname: 'John Henecy', username: 'john_h', password_digest: '5f4dcc3b5aa765d61d8327deb882cf99' } }
       before { post '/teachers', params: valid_params }
+      let(:valid_params) do
+        {
+          fullname: 'John Henecy',
+          username: 'john_h',
+          password_digest: '5f4dcc3b5aa765d61d8327deb882cf99'
+        }
+      end
 
       it 'creates a new teacher' do
         expect(json['fullname']).to eq('John Henecy')

@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   end
 
   resources :teachers, only: %i[show create]
+  post 'auth/teacher/login', to: 'auth#teacher_login'
 end
