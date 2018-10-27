@@ -10,13 +10,13 @@ RSpec.describe 'Teachers API', type: :request do
         expect(json['fullname']).to eq('John Henecy')
       end
 
-      it 'returns status code 201' do
-        expect(response).to have_http_status(201)
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
       end
     end
 
     context 'when request is invalid' do
-      before { post '/techers', params: {} }
+      before { post '/teachers', params: {} }
 
       it 'returns status code 400' do
         expect(response).to have_http_status(400)
