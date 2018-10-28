@@ -24,6 +24,10 @@ RSpec.describe 'Teachers API', type: :request do
     context 'when request is invalid' do
       before { post '/teachers', params: {} }
 
+      it "shows 'Validation failed' message" do
+        expect(json['message']).to match(/Validation failed/)
+      end
+
       it 'returns status code 400' do
         expect(response).to have_http_status(400)
       end
