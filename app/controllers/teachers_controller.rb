@@ -5,12 +5,12 @@ class TeachersController < ApplicationController
   # show dashboard...?
   def show
     teacher = Teacher.find(params[:id])
-    render json: teacher
+    json_response(teacher)
   end
 
   def create
     teacher = Teacher.create!(create_params)
-    render json: teacher
+    json_response(teacher)
   end
 
   private
@@ -31,7 +31,7 @@ class TeachersController < ApplicationController
   end
 
   def render_unauthorized
-    render json: { message: 'Authentication required' }, status: :unauthorized
+    json_response({ message: 'Authorization required' }, :unauthorized)
   end
 
   def authenticate

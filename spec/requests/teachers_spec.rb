@@ -66,7 +66,7 @@ RSpec.describe 'Teachers API', type: :request do
       before { get "/teachers/#{id}", headers: {} }
 
       it "shows 'Authentication required' message" do
-        expect(json['message']).to match(/Authentication required/)
+        expect(json['message']).to match(/Authorization required/)
       end
 
       it 'returns status code 401' do
