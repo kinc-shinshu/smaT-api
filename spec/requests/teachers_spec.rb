@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Teachers API', type: :request do
-  describe 'POST /teachers' do
+  describe 'POST /v1/teachers' do
     context 'when request is valid' do
-      before { post '/teachers', params: valid_params }
+      before { post v1_teachers_path, params: valid_params }
       let(:valid_params) do
         {
           fullname: 'John Henecy',
@@ -22,7 +22,7 @@ RSpec.describe 'Teachers API', type: :request do
     end
 
     context 'when request is invalid' do
-      before { post '/teachers', params: {} }
+      before { post v1_teachers_path, params: {} }
 
       it "shows 'Validation failed' message" do
         expect(json['message']).to match(/Validation failed/)
@@ -35,14 +35,14 @@ RSpec.describe 'Teachers API', type: :request do
   end
 
   # this is test of authenticate
-  describe 'GET /teachers/:id' do
+  describe 'GET /v1/teachers/:id' do
     let!(:teacher) { create(:teacher) }
     let(:id) { teacher.id }
     let(:token) { teacher.token }
     let(:headers) { { 'Authorization' => "Token #{token}" } }
 
     context 'when token is taken' do
-      before { get "/teachers/#{id}", headers: headers }
+      before { get v1_teacher_path(id), headers: headers }
 
       it 'can show teacher detail' do
         expect(json['fullname']).to eq(teacher.fullname)
@@ -55,7 +55,7 @@ RSpec.describe 'Teachers API', type: :request do
 
     context 'when token is taken but id is invalid' do
       let(:id) { 0 }
-      before { get "/teachers/#{id}", headers: headers }
+      before { get v1_teacher_path(id), headers: headers }
 
       it 'shows error messages' do
         expect(json['message']).to match(/Couldn't find Teacher/)
@@ -67,7 +67,7 @@ RSpec.describe 'Teachers API', type: :request do
     end
 
     context 'when token is not taken' do
-      before { get "/teachers/#{id}", headers: {} }
+      before { get v1_teacher_path(id), headers: {} }
 
       it "shows 'Authentication required' message" do
         expect(json['message']).to match(/Authorization required/)

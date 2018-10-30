@@ -1,20 +1,19 @@
 Rails.application.routes.draw do
-  get 'results/index'
-  get 'results/show'
-  get 'results/create'
-  get 'results/edit'
-  get 'results/update'
-  get 'results/destroy'
-  get 'exams/index'
-  get 'exams/show'
-  get 'exams/create'
-  get 'exams/edit'
-  get 'exams/update'
-  get 'exams/destroy'
-  resources :rooms, only: [:index, :create, :destroy] do
-    resources :questions, only: [:index, :create, :destroy, :update]
-  end
+  # resources :rooms, only: [:index, :create, :destroy] do
+  #   resources :questions, only: [:index, :create, :destroy, :update]
+  # end
+  namespace :v1 do
+    # teacher client's resource routing
+    resources :teachers, shallow: true do
+      resources :exams, shallow: true do
+        resources :questions
+        resources :results, only: %i[index create update destroy]
+      end
+    end
 
-  resources :teachers, only: %i[show create]
-  post 'auth/teacher/login', to: 'auth#teacher_login'
+    post 'auth/teacher/login', to: 'auth#teacher_login'
+
+    # student client's resource routing
+    get 'room/:id/questions', to: 'room#questions', as: 'room_questions'
+  end
 end

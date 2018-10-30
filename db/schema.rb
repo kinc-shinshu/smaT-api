@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_30_024038) do
+ActiveRecord::Schema.define(version: 2018_10_30_124737) do
 
   create_table "exams", force: :cascade do |t|
     t.string "title"
     t.integer "status"
-    t.integer "room_number"
+    t.integer "room_id"
     t.integer "teacher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_exams_on_room_id"
     t.index ["teacher_id"], name: "index_exams_on_teacher_id"
   end
 
@@ -39,13 +40,6 @@ ActiveRecord::Schema.define(version: 2018_10_30_024038) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_results_on_question_id"
-  end
-
-  create_table "rooms", force: :cascade do |t|
-    t.string "title"
-    t.integer "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "teachers", force: :cascade do |t|

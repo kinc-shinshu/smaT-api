@@ -1,4 +1,4 @@
-class ResultsController < ApplicationController
+class V1::ResultsController < ApplicationController
   def index
   end
 
@@ -6,9 +6,6 @@ class ResultsController < ApplicationController
   end
 
   def create
-  end
-
-  def edit
   end
 
   def update

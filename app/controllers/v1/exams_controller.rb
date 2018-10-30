@@ -1,4 +1,4 @@
-class ExamsController < ApplicationController
+class V1::ExamsController < ApplicationController
   def index
     room = Exam.all
     render json: room

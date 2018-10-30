@@ -31,3 +31,6 @@
 
 # untrack vendor/bundle
 /vendor/bundle
+
+# ignore erd
+erd.pdf

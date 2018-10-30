@@ -1,4 +1,4 @@
-class QuestionsController < ApplicationController
+class V1::QuestionsController < ApplicationController
   def index
     questions = Exam.find(params[:Exam_id]).questions.all
     render json: questions

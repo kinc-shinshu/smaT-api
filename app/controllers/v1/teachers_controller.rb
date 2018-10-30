@@ -1,4 +1,4 @@
-class TeachersController < ApplicationController
+class V1::TeachersController < ApplicationController
   include ActionController::HttpAuthentication::Token::ControllerMethods
   before_action :authenticate, only: %i[show]
 

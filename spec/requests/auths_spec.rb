@@ -6,12 +6,12 @@ RSpec.describe 'Auths', type: :request do
   let(:password) { teacher.password_digest }
   let(:token) { teacher.token }
 
-  describe 'POST /auth/teacher/login' do
+  describe 'POST /v1/auth/teacher/login' do
     context 'when request is valid' do
       let(:valid_params) do
         { username: username, password_digest: password }
       end
-      before { post '/auth/teacher/login', params: valid_params }
+      before { post v1_auth_teacher_login_path, params: valid_params }
 
       it "responses teacher's token" do
         expect(json['token']).to eq(token)
@@ -23,7 +23,7 @@ RSpec.describe 'Auths', type: :request do
     end
 
     context 'when request is invalid' do
-      before { post '/auth/teacher/login', params: {} }
+      before { post v1_auth_teacher_login_path, params: {} }
       it 'returns status code 400' do
         expect(response).to have_http_status(400)
       end
