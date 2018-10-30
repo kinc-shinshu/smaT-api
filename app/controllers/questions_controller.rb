@@ -1,26 +1,26 @@
 class QuestionsController < ApplicationController
   def index
-    questions = Room.find(params[:room_id]).questions.all
+    questions = Exam.find(params[:Exam_id]).questions.all
     render json: questions
   end
 
   def create
-    question = Room.find(params[:room_id]).questions.new(question_params)
+    question = Exam.find(params[:Exam_id]).questions.new(question_params)
     question.save
     render json: question
   end
 
   def destroy
     delete_question_id = params[:id]
-    question = Room.find(params[:room_id]).questions.find(delete_question_id).destroy
+    question = Exam.find(params[:Exam_id]).questions.find(delete_question_id).destroy
     render json: question
   end
 
-  # そのままパラメータを渡すとRoom_idまで更新されて消えてしまうため
+  # そのままパラメータを渡すとExam_idまで更新されて消えてしまうため
   # 更新の場合は必要なパラメータのみ渡す
   def update
     update_command_id = params[:id]
-    question = Room.find(params[:room_id]).questions.find(update_command_id)
+    question = Exam.find(params[:Exam_id]).questions.find(update_command_id)
     question.update(question_params_for_update)
     render json: question
   end
@@ -32,8 +32,8 @@ class QuestionsController < ApplicationController
     question_text = params[:text]
     question_answer = params[:answer]
     question_type = params[:question_type]
-    question_room_id = :room_id
-    {text: question_text, answer: question_answer, question_type: question_type,room_id: question_room_id}
+    question_Exam_id = :Exam_id
+    {text: question_text, answer: question_answer, question_type: question_type,Exam_id: question_Exam_id}
   end
 
   # 更新の場合のパラメータ
