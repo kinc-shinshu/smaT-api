@@ -1,8 +1,8 @@
 FactoryBot.define do
-  factory :exam do
-    title { "MyString" }
-    status { 1 }
-    room_number { 1 }
-    teacher { nil }
-  end
+  # factory :exam do
+  #   title { Faker::Lorem.word }
+  #   status { [0, 1].sample }
+  #   room_id { rand(100..999) }
+  #   teacher { create(:teacher) }
+  # end
 end

@@ -14,3 +14,5 @@ Metrics/ClassLength:
   Enabled: false
 Metrics/MethodLength:
   Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
