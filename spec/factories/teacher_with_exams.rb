@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :question do
     text { Faker::Lorem.sentence }
     answer { Faker::Lorem.sentence }
-    type { Faker::Lorem.words }
+    question_type { Faker::Lorem.words }
 
     # belongs_to
     exam
