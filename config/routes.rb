@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'results/index'
+  get 'results/show'
+  get 'results/create'
+  get 'results/edit'
+  get 'results/update'
+  get 'results/destroy'
   get 'exams/index'
   get 'exams/show'
   get 'exams/create'
