@@ -14,6 +14,11 @@ Rails.application.routes.draw do
     post 'auth/teacher/login', to: 'auth#teacher_login'
 
     # student client's resource routing
-    get 'room/:id/questions', to: 'room#questions', as: 'room_questions'
+    get 'rooms/:room_id/questions',     to: 'room#questions_index', as: 'room_questions'
+    get 'rooms/:room_id/questions/:id', to: 'room#quesions_show',   as: 'room_question_single'
+
+    get  'states/:client_id', to: 'states#show'
+    post 'states/:client_id', to: 'states#update'
+    get  'states/:client_id/finish', to: 'states#finish'
   end
 end
