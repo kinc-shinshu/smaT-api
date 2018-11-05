@@ -85,9 +85,16 @@ RSpec.describe 'Questions', type: :request do
 
   describe 'DELETE /v1/questions/:id' do
     context 'when question exists' do
+      before { delete v1_question_path(question_id) }
+
+      it 'deletes question' do
+        expect(Question.find_by(id: question_id)).to be_nil
+      end
     end
 
     context 'when question does not exist' do
+      before { delete v1_question_path(0) }
+
       it 'returns "Request Invalid" message' do
         expect(json['message']).to match(/Request Invalid/)
       end
