@@ -5,7 +5,8 @@ RSpec.describe 'Questions', type: :request do
   let(:exam) { teacher.exams.first }
   let(:exam_id) { exam.id }
   let(:questions) { exam.questions }
-  let(:question_id) { questions.first.id }
+  let(:question) { questions.first }
+  let(:question_id) { question.id }
 
   describe 'GET /v1/exams/:exam_id/questions' do
     context 'when exam exists' do
@@ -50,6 +51,33 @@ RSpec.describe 'Questions', type: :request do
 
       it 'returns "Validation failed" message' do
         expect(json['message']).to match(/Validation failed/)
+      end
+
+      it 'returns status code 400' do
+        expect(response).to have_http_status(400)
+      end
+    end
+  end
+
+  describe 'GET /v1/questions/:id' do
+    context 'when question exists' do
+      before { get v1_question_path(question_id) }
+
+      it 'returns specified question' do
+        expect(json).to eq(JSON.parse(question.to_json))
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when question does not exist' do
+      let(:question_id) { 0 }
+      before { get v1_question_path(question_id) }
+
+      it "returns 'Couldn't find ...' message" do
+        expect(json['message']).to match(/Couldn't find/)
       end
 
       it 'returns status code 400' do

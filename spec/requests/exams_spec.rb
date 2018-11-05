@@ -6,6 +6,33 @@ RSpec.describe 'Exams', type: :request do
   let(:exam) { teacher.exams.first }
   let(:exam_id) { exam.id }
 
+  describe 'GET /v1/exams/:id' do
+    context 'when exam exists' do
+      before { get v1_exam_path(exam_id) }
+
+      it 'returns specified exam' do
+        expect(json).to eq(JSON.parse(exam.to_json))
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when exam does not exist' do
+      let(:exam_id) { 0 }
+      before { get v1_exam_path(exam_id) }
+
+      it "returns 'Couldn't find ...' message" do
+        expect(json['message']).to match(/Couldn't find/)
+      end
+
+      it 'returns status code 400' do
+        expect(response).to have_http_status(400)
+      end
+    end
+  end
+
   describe 'POST /v1/teachers/:teacher_id/exams' do
     context 'when request is valid' do
       let(:valid_params) { { title: 'Examination' } }

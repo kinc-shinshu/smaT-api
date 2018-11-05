@@ -5,6 +5,8 @@ class V1::QuestionsController < ApplicationController
   end
 
   def show
+    question = Question.find(params[:id])
+    json_response(question)
   end
 
   def create

@@ -4,10 +4,10 @@ Rails.application.routes.draw do
   # end
   namespace :v1 do
     # teacher client's resource routing
-    resources :teachers, shallow: true do
-      resources :exams, shallow: true do
-        resources :questions
-        resources :results, only: %i[index create update destroy]
+    resources :teachers, only: %i[index show create update destroy], shallow: true do
+      resources :exams,  only: %i[index show create update destroy], shallow: true do
+        resources :questions, only: %i[index show create update destroy]
+        resources :results,   only: %i[index show create update destroy]
       end
     end
 
