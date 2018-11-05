@@ -12,7 +12,7 @@ RSpec.describe 'Exams', type: :request do
       before { post v1_teacher_exams_path(teacher_id), params: valid_params }
 
       it 'returns created exam' do
-        expect(json['title']).to eq(valid_param[:title])
+        expect(json['title']).to eq(valid_params[:title])
       end
 
       it 'creates "open" exam' do
@@ -27,8 +27,8 @@ RSpec.describe 'Exams', type: :request do
     context 'when params not specified invalid' do
       before { post v1_teacher_exams_path(teacher_id), params: {} }
 
-      it 'returns "Request Invalid" message' do
-        expect(json['message']).to match(/Request Invalid/)
+      it 'returns "Validation failed" message' do
+        expect(json['message']).to match(/Validation failed/)
       end
 
       it 'returns status code 400' do
@@ -40,8 +40,8 @@ RSpec.describe 'Exams', type: :request do
       let(:teacher_id) { 0 }
       before { post v1_teacher_exams_path(teacher_id), params: {} }
 
-      it 'returns "Record not found" message' do
-        expect(json['message']).to match(/Record Not Found/)
+      it "returns 'Couldn't find ...' message" do
+        expect(json['message']).to match(/Couldn't find .../)
       end
 
       it 'returns status code 400' do
@@ -67,8 +67,8 @@ RSpec.describe 'Exams', type: :request do
     context 'when params not specified invalid' do
       before { put v1_exam_path(exam_id), params: {} }
 
-      it 'returns "Request Invalid" message' do
-        expect(json['message']).to match(/Request Invalid/)
+      it 'returns "Validation failed" message' do
+        expect(json['message']).to match(/Validation failed/)
       end
 
       it 'returns status code 400' do
@@ -80,8 +80,39 @@ RSpec.describe 'Exams', type: :request do
       let(:exam_id) { 0 }
       before { put v1_exam_path(exam_id), params: {} }
 
-      it 'returns "Record not found" message' do
-        expect(json['message']).to match(/Record Not Found/)
+      it "returns 'Couldn't find ...' message" do
+        expect(json['message']).to match(/Couldn't find/)
+      end
+
+      it 'returns status code 400' do
+        expect(response).to have_http_status(400)
+      end
+    end
+  end
+
+  describe 'DELETE /v1/exams/:id' do
+    let(:question) { exam.questions.first }
+    let(:question_id) { question.id }
+
+    context 'when exam found' do
+      before { delete v1_exam_path(exam_id) }
+
+      it 'deletes exam' do
+        expect(Exam.find(exam_id)).to be_nil
+      end
+
+      it 'deletes question related exam' do
+        expect(Question.find(question_id)).to be_nil
+      end
+
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
+
+    context 'when exam not found' do
+      it "returns 'Couldn't find ...' message" do
+        expect(json['message']).to match(/Couldn't find/)
       end
 
       it 'returns status code 400' do
