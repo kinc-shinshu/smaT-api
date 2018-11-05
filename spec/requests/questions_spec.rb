@@ -11,8 +11,9 @@ RSpec.describe 'Questions', type: :request do
     context 'when exam exists' do
       before { get v1_exam_questions_path(exam_id) }
 
+      # questions is ActiveRecord::CollectionProxy
       it 'returns all questions of exam' do
-        expect(json['questions']).to eq(questions)
+        expect(json).to eq(JSON.parse(questions.to_json))
       end
 
       it 'returns status code 200' do
@@ -24,8 +25,8 @@ RSpec.describe 'Questions', type: :request do
       let(:exam_id) { 0 }
       before { get v1_exam_questions_path(exam_id) }
 
-      it 'returns "Record Not Found" message' do
-        expect(json['message']).to match(/Record Not Found/)
+      it "returns 'Couldn't find ...' message" do
+        expect(json['message']).to match(/Couldn't find/)
       end
     end
   end
@@ -47,8 +48,8 @@ RSpec.describe 'Questions', type: :request do
     context 'when request is invalid' do
       before { post v1_exam_questions_path(exam_id), params: {} }
 
-      it 'returns "Request Invalid" message' do
-        expect(json['message']).to match(/Request Invalid/)
+      it 'returns "Validation failed" message' do
+        expect(json['message']).to match(/Validation failed/)
       end
 
       it 'returns status code 400' do
@@ -73,8 +74,9 @@ RSpec.describe 'Questions', type: :request do
 
     context 'when request is invalid' do
       before { put v1_question_path(question_id), params: {} }
-      it 'returns "Request Invalid" message' do
-        expect(json['message']).to match(/Request Invalid/)
+
+      it 'returns "Validation failed" message' do
+        expect(json['message']).to match(/Validation failed/)
       end
 
       it 'returns status code 400' do
@@ -90,13 +92,17 @@ RSpec.describe 'Questions', type: :request do
       it 'deletes question' do
         expect(Question.find_by(id: question_id)).to be_nil
       end
+
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
     end
 
     context 'when question does not exist' do
       before { delete v1_question_path(0) }
 
-      it 'returns "Request Invalid" message' do
-        expect(json['message']).to match(/Request Invalid/)
+      it "returns 'Couldn't find ...' message" do
+        expect(json['message']).to match(/Couldn't find/)
       end
 
       it 'returns status code 400' do
