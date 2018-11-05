@@ -8,26 +8,23 @@ class V1::ExamsController < ApplicationController
   end
 
   def create
-    room = Exam.find_by(status: 0)
-    if room.nil?
-      render status: :forbidden
-    else
-      room.update(title: params[:title], status: 1)
-      render json: room
-    end
+    teacher = Teacher.find(params[:teacher_id])
+    exam = teacher.exams.create!(title: params[:title], status: 1)
+    json_response(exam, :created)
   end
 
   def edit
   end
 
   def update
+    exam = Exam.find(params[:id])
+    exam.update!(title: params[:title])
+    json_response(exam)
   end
 
   def destroy
-    close_room_id = params[:id]
-    room = Exam.find(close_room_id)
-    room.questions.where(room_id: close_room_id).destroy_all
-    room.update(title: 'title', status: 0)
-    render json: room
+    exam = Exam.find(params[:id])
+    exam.destroy
+    json_response({}, :no_content)
   end
 end

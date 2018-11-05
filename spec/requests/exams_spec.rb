@@ -98,11 +98,11 @@ RSpec.describe 'Exams', type: :request do
       before { delete v1_exam_path(exam_id) }
 
       it 'deletes exam' do
-        expect(Exam.find(exam_id)).to be_nil
+        expect(Exam.find_by(id: exam_id)).to be_nil
       end
 
       it 'deletes question related exam' do
-        expect(Question.find(question_id)).to be_nil
+        expect(question).to be_nil
       end
 
       it 'returns status code 204' do
@@ -111,6 +111,9 @@ RSpec.describe 'Exams', type: :request do
     end
 
     context 'when exam not found' do
+      let(:exam_id) { 0 }
+      before { delete v1_exam_path(exam_id) }
+
       it "returns 'Couldn't find ...' message" do
         expect(json['message']).to match(/Couldn't find/)
       end
