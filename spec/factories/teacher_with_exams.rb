@@ -19,6 +19,18 @@ FactoryBot.define do
     after(:create) do |exam, _|
       create_list(:question, 10, exam: exam)
     end
+
+    factory :open_exam do
+      title { 'Open Exam' }
+      status { 1 }
+      room_id { 100 }
+    end
+
+    factory :close_exam do
+      title { 'Close Exam' }
+      status { 0 }
+      room_id { 999 }
+    end
   end
 
   factory :teacher do
