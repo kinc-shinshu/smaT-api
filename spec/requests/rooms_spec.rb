@@ -11,8 +11,7 @@ RSpec.describe 'Rooms', type: :request do
       before { get v1_room_questions_path(open_exam_number) }
 
       it 'returns all questions from Exam.find_by(room_id: params[:room_id])' do
-        binding.pry
-        expect(response.body).to eq(open_exam.questions.to_json)
+        expect(json).to eq(JSON.parse(open_exam.questions.to_json))
       end
 
       it 'returns status code 200' do
@@ -58,15 +57,27 @@ RSpec.describe 'Rooms', type: :request do
       end
     end
 
-    context 'when question does not exist' do
-      before { get v1_room_question_single_path(room_id: open_exam_number, id: 0) }
+    context 'when request specifies invalid id(index)' do
+      before { get v1_room_question_single_path(room_id: open_exam_number, id: -1) }
+
+      it 'returns "Invalid request." message' do
+        expect(json['message']).to eq("Invalid request.")
+      end
+
+      it 'returns status code 400' do
+        expect(response).to have_http_status(400)
+      end
+    end
+
+    context 'when request specifies out range id(index)' do
+      before { get v1_room_question_single_path(room_id: open_exam_number, id: 999) }
 
       it 'returns "Question does not found." message' do
         expect(json['message']).to eq("Question does not found.")
       end
 
-      it 'returns status code 400' do
-        expect(response).to have_http_status(400)
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
       end
     end
   end
