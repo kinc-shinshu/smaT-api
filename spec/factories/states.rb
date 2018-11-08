@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :state do
-    client_id { "MyString" }
+    student_id { 0 }
     q_id { "MyString" }
     judge { "MyString" }
     challenge { "MyString" }

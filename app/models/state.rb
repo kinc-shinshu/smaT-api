@@ -1,3 +1,3 @@
 class State < ApplicationRecord
-  validates_presence_of :client_id, :q_id, :judge, :challenge
+  validates_presence_of :student_id, :q_id, :judge, :challenge
 end

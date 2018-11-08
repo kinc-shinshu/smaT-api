@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2018_11_05_095533) do
   end
 
   create_table "states", force: :cascade do |t|
-    t.string "client_id"
+    t.string "student_id"
     t.string "q_id"
     t.string "judge"
     t.string "challenge"
