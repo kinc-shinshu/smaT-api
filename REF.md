@@ -7,3 +7,4 @@
 - [Build a RESTful JSON API With Rails 5 - Part One ― Scotch](https://scotch.io/tutorials/build-a-restful-json-api-with-rails-5-part-one)
 - [ruby - Default :exclude option for Rails resource routing - Stack Overflow](https://stackoverflow.com/questions/26616053/default-exclude-option-for-rails-resource-routing)
 - [ruby on rails - :except options in routes that contain collections and members not working - Stack Overflow](https://stackoverflow.com/questions/6462815/except-options-in-routes-that-contain-collections-and-members-not-working)
+- [activerecord - Rails create or update magic? - Stack Overflow](https://stackoverflow.com/questions/18747062/rails-create-or-update-magic#18747148)
