@@ -18,6 +18,6 @@ Rails.application.routes.draw do
 
     get  'states/:student_id', to: 'states#show', as: 'state'
     post 'states/:student_id', to: 'states#update'
-    get  'states/:student_id/finish', to: 'states#finish', as: 'states_finish'
+    post 'states/:student_id/finish', to: 'states#finish', as: 'state_finish'
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "States", type: :request do
   let(:state) { create(:state) }
-  let(:student_id) { state.student_id }
+  let(:student_id) { state.student_id.to_i }
 
   describe 'GET /v1/states/:student_id' do
     context 'when state is saved' do
@@ -33,9 +33,9 @@ RSpec.describe "States", type: :request do
   describe 'POST /v1/states/:student_id' do
     let(:valid_params) do
       {
-        q_id: '1',
-        judge: '0',
-        challenge: '1'
+        q_id: '1,2',
+        judge: '0,1',
+        challenge: '1,1'
       }
     end
 
@@ -82,7 +82,7 @@ RSpec.describe "States", type: :request do
     context 'when state exists' do
       let(:state) { create(:finished_state) }
       let(:student_id) { state.student_id }
-      before { post v1_states_finish_path(student_id) }
+      before { post v1_state_finish_path(student_id) }
 
       # TODO: write assertion for creating result
 
@@ -100,14 +100,14 @@ RSpec.describe "States", type: :request do
     end
 
     context 'when state does not exist' do
-      before { post v1_states_finish_path(student_id) }
+      before { post v1_state_finish_path(0) }
 
       it 'returns "Couldn\'t find..." message' do
-        expect(json['message']).to match(/Coludn't find/)
+        expect(json['message']).to match(/Couldn't find/)
       end
 
-      it 'returns status code 404' do
-        expect(response).to have_http_status(404)
+      it 'returns status code 400' do
+        expect(response).to have_http_status(400)
       end
     end
   end
