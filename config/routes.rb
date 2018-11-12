@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     end
 
     post 'auth/teacher/login', to: 'auth#teacher_login'
+    post 'exams/:id/open',  to: 'exams#open',  as: 'exam_open'
+    post 'exams/:id/close', to: 'exams#close', as: 'exam_close'
 
     # student client's resource routing
     get 'rooms/:room_id/questions',     to: 'room#questions_index', as: 'room_questions'

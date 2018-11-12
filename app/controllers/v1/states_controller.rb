@@ -4,7 +4,7 @@ class V1::StatesController < ApplicationController
     json_response(state)
   end
 
-  # use state.valid? as validator to check state is saved in
+  # use state.valid? to check state is saved in
   def update
     state = State.find_or_initialize_by(student_id: params[:student_id])
     message, code = state.valid? ? ['Update success.', :ok] : ['State created.', :created]

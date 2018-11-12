@@ -1,6 +1,7 @@
 class Exam < ApplicationRecord
   # callback
   before_validation :set_status
+  after_initialize  :set_default
 
   # validation
   validates_presence_of :title
@@ -13,5 +14,9 @@ class Exam < ApplicationRecord
 
   def set_status
     self.status ||= 0
+  end
+
+  def set_default
+    self.room_id = -1
   end
 end
