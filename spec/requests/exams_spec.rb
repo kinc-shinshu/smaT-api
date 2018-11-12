@@ -119,10 +119,12 @@ RSpec.describe 'Exams', type: :request do
 
   describe 'POST /v1/exams/:id/open' do
     context 'when exam exists' do
+      let(:close_exam) { create(:close_exam) }
+      let(:exam_id) { close_exam.id }
       before { post v1_exam_open_path(exam_id) }
 
       it 'assigns room_id to specified exam' do
-        expect(json['room_id']).not_to be_empty
+        expect(json['room_id']).not_to eq(-1)
       end
 
       it 'updates status to 1' do
@@ -135,8 +137,12 @@ RSpec.describe 'Exams', type: :request do
     end
 
     context 'when exam is already opened' do
-      it 'returns "Already open." message' do
-        expect(json['message']).to eq('Already open.')
+      let(:open_exam) { create(:open_exam) }
+      let(:exam_id) { open_exam.id }
+      before { post v1_exam_open_path(exam_id) }
+
+      it "returns 'Couldn't find ...' (open exam) message" do
+        expect(json['message']).to match(/Couldn't find/)
       end
 
       it 'returns status code 400' do
