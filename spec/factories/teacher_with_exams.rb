@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :question do
-    text { Faker::Lorem.sentence }
+    smatex { Faker::Lorem.sentence }
+    latex { Faker::Lorem.sentence }
     answer { Faker::Lorem.sentence }
     question_type { Faker::Lorem.word }
 
