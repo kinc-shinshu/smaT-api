@@ -34,10 +34,13 @@ RSpec.describe 'Questions', type: :request do
 
   describe 'POST /v1/exams/:exam_id/questions' do
     context 'when request is valid' do
-      let(:valid_params) { { text: '4+4=', answer: '8', question_type: 'Math' } }
+      let(:valid_params) { { smatex: '#{4}', latex: '\sqrt{4}', answer: '2', question_type: 'Math' } }
       before { post v1_exam_questions_path(exam_id), params: valid_params }
 
       it 'returns created question' do
+        expect(json['smatex']).to eq(valid_params[:smatex])
+        expect(json['latex']).to eq(valid_params[:latex])
+        expect(json['answer']).to eq(valid_params[:answer])
         expect(json['question_type']).to eq(valid_params[:question_type])
       end
 
@@ -88,10 +91,13 @@ RSpec.describe 'Questions', type: :request do
 
   describe 'PATCH/PUT /v1/questions/:id' do
     context 'when request is valid' do
-      let(:valid_params) { { text: '8+8=', answer: '16', question_type: 'Mathematics' } }
+      let(:valid_params) { { smatex: '#{2}', latex: '\sqrt{2}', answer: '1.41421356', question_type: 'Mathematics' } }
       before { put v1_question_path(question_id), params: valid_params }
 
       it 'returns updated question' do
+        expect(json['smatex']).to eq(valid_params[:smatex])
+        expect(json['latex']).to eq(valid_params[:latex])
+        expect(json['answer']).to eq(valid_params[:answer])
         expect(json['question_type']).to eq(valid_params[:question_type])
       end
 

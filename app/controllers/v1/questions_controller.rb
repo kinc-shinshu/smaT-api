@@ -30,7 +30,8 @@ class V1::QuestionsController < ApplicationController
 
   def question_params
     {
-      text: params[:text],
+      smatex: params[:smatex],
+      latex: params[:latex],
       answer: params[:answer],
       question_type: params[:question_type]
     }
