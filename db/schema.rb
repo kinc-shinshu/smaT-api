@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_15_132614) do
+ActiveRecord::Schema.define(version: 2018_11_19_093927) do
 
   create_table "exams", force: :cascade do |t|
     t.string "title"
@@ -25,12 +25,13 @@ ActiveRecord::Schema.define(version: 2018_11_15_132614) do
 
   create_table "questions", force: :cascade do |t|
     t.string "question_type"
-    t.string "answer"
+    t.string "ans_smatex"
     t.integer "exam_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "latex"
     t.string "smatex"
+    t.string "ans_latex"
     t.index ["exam_id"], name: "index_questions_on_exam_id"
   end
 
