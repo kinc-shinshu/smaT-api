@@ -7,7 +7,8 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'smarteach.herokuapp.com', 'localhost:3000'
+    # origins 'smarteach.herokuapp.com', 'localhost:3000'
+    origins '*'
     resource '*',
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete]
