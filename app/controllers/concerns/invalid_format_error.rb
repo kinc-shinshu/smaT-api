@@ -1,0 +1,2 @@
+class InvalidFormatError < StandardError
+end

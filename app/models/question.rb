@@ -4,4 +4,5 @@ class Question < ApplicationRecord
 
   # relation
   belongs_to :exam
+  has_many :results, dependent: :destroy
 end

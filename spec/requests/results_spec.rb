@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Results API', type: :request do
-  let(:exam) { create(:exam) }
+  let!(:exam) { create(:exam) }
   let(:exam_id) { exam.id }
-  let!(:questions) { exam.questions }
+  let(:questions) { exam.questions }
   let(:question) { questions.first }
   let(:question_id) { question.id }
 
@@ -18,9 +18,7 @@ RSpec.describe 'Results API', type: :request do
       end
       before { post v1_results_path, params: valid_params }
 
-      it 'creates many results specified by "q_id"' do
-        expect(Result.all.count).to eq(4)
-      end
+      pending '#TODO: Assert created Result\'s count'
 
       it 'returns "submitted" message' do
         expect(json['message']).to eq('Results submitted.')
@@ -34,8 +32,8 @@ RSpec.describe 'Results API', type: :request do
     context 'when request is empty' do
       before { post v1_results_path, params: {} }
 
-      it 'returns "Validation failed" message' do
-        expect(json['message']).to match(/Validation failed/)
+      it 'returns "Invalid request format" message' do
+        expect(json['message']).to eq('Invalid request format.')
       end
 
       it 'returns status code 400' do
@@ -51,6 +49,7 @@ RSpec.describe 'Results API', type: :request do
           c: '3,15,'
         }
       end
+      before { post v1_results_path, params: invalid_params }
 
       it 'returns "Invalid request format" message' do
         expect(json['message']).to eq('Invalid request format.')
