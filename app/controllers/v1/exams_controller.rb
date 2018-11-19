@@ -13,13 +13,13 @@ class V1::ExamsController < ApplicationController
 
   def create
     teacher = Teacher.find(params[:teacher_id])
-    exam = teacher.exams.create!(title: params[:title], status: 1)
+    exam = teacher.exams.create!(exam_params)
     json_response(exam, :created)
   end
 
   def update
     exam = Exam.find(params[:id])
-    exam.update!(title: params[:title])
+    exam.update!(exam_params)
     json_response(exam)
   end
 
@@ -43,5 +43,14 @@ class V1::ExamsController < ApplicationController
     exam = Exam.find(params[:id])
     exam.update!(status: 0, room_id: -1)
     json_response(exam)
+  end
+
+  private
+
+  def exam_params
+    {
+      title: params[:title],
+      description: params[:description]
+    }
   end
 end

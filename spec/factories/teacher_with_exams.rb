@@ -12,6 +12,7 @@ FactoryBot.define do
 
   factory :exam do
     title { Faker::Lorem.word }
+    description { Faker::Lorem.sentence }
     status { [0, 1].sample }
     room_id { rand(100..999) }
 

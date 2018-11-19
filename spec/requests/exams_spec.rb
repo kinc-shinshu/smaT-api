@@ -35,15 +35,16 @@ RSpec.describe 'Exams', type: :request do
 
   describe 'POST /v1/teachers/:teacher_id/exams' do
     context 'when request is valid' do
-      let(:valid_params) { { title: 'Examination' } }
+      let(:valid_params) { { title: 'Examination', description: Faker::Lorem.sentence } }
       before { post v1_teacher_exams_path(teacher_id), params: valid_params }
 
       it 'returns created exam' do
         expect(json['title']).to eq(valid_params[:title])
+        expect(json['description']).to eq(valid_params[:description])
       end
 
-      it 'creates "open" exam' do
-        expect(json['status']).to eq(1)
+      it 'creates "close" exam' do
+        expect(json['status']).to eq(0)
       end
 
       it 'returns status code 201' do
@@ -79,11 +80,12 @@ RSpec.describe 'Exams', type: :request do
 
   describe 'PATCH/PUT /v1/exams/:id' do
     context 'when request is valid' do
-      let(:valid_params) { { title: 'New Examination' } }
+      let(:valid_params) { { title: 'New Examination', description: "New #{Faker::Lorem.sentence}" } }
       before { put v1_exam_path(exam_id), params: valid_params }
 
       it 'returns updated exam' do
         expect(json['title']).to eq(valid_params[:title])
+        expect(json['description']).to eq(valid_params[:description])
       end
 
       it 'returns status code 200' do
