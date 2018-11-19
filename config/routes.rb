@@ -1,14 +1,18 @@
 Rails.application.routes.draw do
   namespace :v1 do
     # teacher client's resource routing
-    with_options(except: %i[new edit]) do |opt|
-      opt.resources :teachers, shallow: true do
-        opt.resources :exams, shallow: true do
+    with_options(except: %i[new edit], shallow: true) do |opt|
+      opt.resources :teachers do
+        opt.resources :exams do
           opt.resources :questions
-          opt.resources :results
         end
       end
     end
+
+    # non-RESTful routings 'Result'
+    get  'exams/:exam_id/results', to: 'results#exam_index', as: 'exam_results'
+    get  'questions/:question_id/results', to: 'results#question_index', as: 'question_results'
+    post 'results', to: 'results#create'
 
     post 'auth/teacher/login', to: 'auth#teacher_login'
     post 'exams/:id/open',  to: 'exams#open',  as: 'exam_open'

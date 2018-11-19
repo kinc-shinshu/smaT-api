@@ -1,4 +1,12 @@
 FactoryBot.define do
+  factory :result do
+    judge { [0, 1].sample }
+    challenge { rand(1..5) }
+
+    # belongs_to
+    question
+  end
+
   factory :question do
     smatex { Faker::Lorem.sentence }
     latex  { Faker::Lorem.sentence }
@@ -8,6 +16,10 @@ FactoryBot.define do
 
     # belongs_to
     exam
+
+    after(:create) do |question, _|
+      create_list(:result, 5, question: question)
+    end
   end
 
   factory :exam do

@@ -10,4 +10,5 @@ RSpec.describe Question, type: :model do
 
   # relation
   it { should belong_to(:exam) }
+  it { should have_many(:results).dependent(:destroy) }
 end
