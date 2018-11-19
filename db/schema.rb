@@ -10,22 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_08_091217) do
+ActiveRecord::Schema.define(version: 2018_11_19_113441) do
+
+  create_table "exams", force: :cascade do |t|
+    t.string "title"
+    t.integer "status"
+    t.integer "room_id"
+    t.integer "teacher_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "description"
+    t.index ["room_id"], name: "index_exams_on_room_id"
+    t.index ["teacher_id"], name: "index_exams_on_teacher_id"
+  end
 
   create_table "questions", force: :cascade do |t|
-    t.string "text"
-    t.string "answer"
     t.string "question_type"
-    t.integer "room_id"
+    t.string "ans_smatex"
+    t.integer "exam_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "latex"
+    t.string "smatex"
+    t.string "ans_latex"
+    t.index ["exam_id"], name: "index_questions_on_exam_id"
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.integer "question_id"
+    t.integer "judge"
+    t.integer "challenge"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_results_on_question_id"
+  end
+
+  create_table "states", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "q_id"
+    t.string "judge"
+    t.string "challenge"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "rooms", force: :cascade do |t|
-    t.string "title"
-    t.integer "status"
+  create_table "teachers", force: :cascade do |t|
+    t.string "fullname"
+    t.string "username"
+    t.string "password_digest"
+    t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["token"], name: "index_teachers_on_token", unique: true
   end
 
 end
