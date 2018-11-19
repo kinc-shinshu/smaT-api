@@ -1,8 +1,9 @@
 FactoryBot.define do
   factory :question do
     smatex { Faker::Lorem.sentence }
-    latex { Faker::Lorem.sentence }
-    answer { Faker::Lorem.sentence }
+    latex  { Faker::Lorem.sentence }
+    ans_smatex { Faker::Lorem.sentence }
+    ans_latex  { Faker::Lorem.sentence }
     question_type { Faker::Lorem.word }
 
     # belongs_to

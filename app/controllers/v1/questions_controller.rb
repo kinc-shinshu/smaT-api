@@ -32,7 +32,8 @@ class V1::QuestionsController < ApplicationController
     {
       smatex: params[:smatex],
       latex: params[:latex],
-      answer: params[:answer],
+      ans_smatex: params[:ans_smatex],
+      ans_latex: params[:ans_latex],
       question_type: params[:question_type]
     }
   end

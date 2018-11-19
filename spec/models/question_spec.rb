@@ -5,7 +5,8 @@ RSpec.describe Question, type: :model do
   it { should validate_presence_of(:smatex) }
   it { should validate_presence_of(:latex) }
   it { should validate_presence_of(:question_type) }
-  it { should validate_presence_of(:answer) }
+  it { should validate_presence_of(:ans_smatex) }
+  it { should validate_presence_of(:ans_latex) }
 
   # relation
   it { should belong_to(:exam) }

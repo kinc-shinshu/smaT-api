@@ -10,7 +10,8 @@ end
 # create questions
 q_smatex = ['#{4}', '[3]%[6]', '3*4', '25/5', '55^2']
 q_latex  = ['\\sqrt{4}', '\\frac{3}{6}', '3 \\times 4', '25 \\div 5', '55^2']
-q_answer = ['+-2', '[1]%[2]', '12', '5', '3025']
+a_smatex = ['+-2', '[1]%[2]', '12', '5', '3025']
+a_latex  = ['+-2', '\\frac{1}{2}', '12', '5', '3025']
 
 t.exams.each do |exam|
   5.times do
@@ -18,7 +19,8 @@ t.exams.each do |exam|
     exam.questions.create!(
       smatex: q_smatex[q_idx],
       latex: q_latex[q_idx],
-      answer: q_answer[q_idx],
+      ans_smatex: a_smatex[q_idx],
+      ans_latex: a_latex[q_idx],
       question_type: 'Math'
     )
   end
