@@ -72,8 +72,15 @@ Nothing.
 
 #### Returns
 
+##### teacher exists
+
 - Array of Exam's JSON
 - HTTP 200
+
+##### teacher doesn't exist
+
+- get `Couldn't find` message
+- HTTP 400
 
 #### Example
 
