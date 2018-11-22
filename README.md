@@ -15,6 +15,18 @@ $ bundle exec rails db:migrate
 $ bundle exec rails db:seed
 ```
 
+## Generate request spec
+
+```
+$ bundle exec rails g rspec:integration NAME
+```
+
+## Run specs
+
+```
+$ bundle exec rspec
+```
+
 ## Teacher's API
 
 - HOSTは`smat-api-dev.herokuapp.com`のようなAPIサーバーのホスト先URIを示す
@@ -29,7 +41,7 @@ $ bundle exec rails db:seed
 
 Nothing.
 
-#### Return
+#### Returns
 
 - Array of Exam's JSON
 - HTTP 200
@@ -74,7 +86,7 @@ $ curl https://HOST/v1/teachers/1/exams | jq
 | title       | String* |
 | description | String  |
 
-#### Return
+#### Returns
 
 ##### params is valid
 
@@ -121,7 +133,7 @@ _INFO: `description` accepts empty_
 
 Nothing.
 
-#### Return
+#### Returns
 
 ##### Exam exists
 
@@ -681,15 +693,3 @@ $ curl -X POST -H 'Content-Type: application/json' https://smat-api-dev.herokuap
 ### POST `/v1/states/:student_id/finish` _under development_
 
 ### POST `/v1/results` _under development_
-
-## Generate request spec
-
-```
-$ bundle exec rails g rspec:integration NAME
-```
-
-## Run specs
-
-```
-$ bundle exec rspec
-```
