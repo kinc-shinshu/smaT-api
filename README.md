@@ -10,156 +10,202 @@ An API server of smaT for [shinshu-futureapp contest](https://shinshu-futureapp.
 
 ## Install
 ```
-$ bundle install
-$ rails db:migrate
-$ rails db:seed
+$ bundle install --path=vendor/bundle
+$ bundle exec rails db:migrate
+$ bundle exec rails db:seed
 ```
 
+## Teacher's API
 
-## Endpoints
+- HOSTは`smat-api-dev.herokuapp.com`のようなAPIサーバーのホスト先URIを示す
+- `params`における`*`は**空白を許さない**という意味
 
-- **[<code>POST</code> /rooms](#post-rooms)**
-- **[<code>GET</code> /rooms/search](#get-roomssearch)**
-- **[<code>GET</code> /rooms/:room_id/questions](#get-roomsroom_idquestions)**
-- **[<code>POST</code> /rooms/:room_id/questions](#post-roomsroom_idquestions)**
-- **[<code>PATCH</code> /rooms/:room_id/questions/:id](#patch-roomsroom_idquestionsid)**
-- **[<code>DELETE</code> /rooms/:room_id/questions/:id](#delete-roomsroom_idquestionsid)**
+### GET `/v1/teachers/:teacher_id/exams`
 
-### POST /rooms
+指定した教員教員(:teacher_id)が作成した試験情報一覧を返す。
+試験内の問題は含まない。
 
-If there is space, create a room.
+#### Params
 
-#### Parameters
+Nothing.
 
-| Name          | Description             |
-| ------------- | ----------------------- |
-| title         | A title of the room     |
+#### Return
 
-#### Exception
-
-`503 Service Unavailable`: if there is no space for create a room.
+- Array of Exam's JSON
+- HTTP 200
 
 #### Example
 
-```
-$ curl -X POST localhost:3000/rooms -d "title=Math" | jq
-{
-  "name": "111",
-  "id": 1,
-  "title": "Math",
-  "status": 1,
-  "created_at": "2018-10-08T16:20:13.666Z",
-  "updated_at": "2018-10-08T16:20:26.529Z"
-}
-```
+```shell
+$ curl https://HOST/v1/teachers/1/exams | jq
 
-### GET /rooms/:room_id/questions
-
-Display a list of questions in a specific room.
-
-#### Example
-
-```
-$ curl -X GET localhost:3000/rooms/1/quiestions | jq
 [
   {
     "id": 1,
-    "text": "1+1=",
-    "answer": "2",
-    "room_id": 1,
-    "created_at": "2018-10-08T16:20:13.666Z",
-    "updated_at": "2018-10-08T16:20:26.529Z"
+    "title": "Exam0",
+    "status": 0,
+    "room_id": -1,
+    "teacher_id": 1,
+    "created_at": "2018-11-22T19:05:33.871+09:00",
+    "updated_at": "2018-11-22T19:05:33.871+09:00",
+    "description": null
   },
   {
     "id": 2,
-    "text": "2+2=",
-    "answer": "4",
-    "room_id": 1,
-    "created_at": "2018-10-08T16:20:13.666Z",
-    "updated_at": "2018-10-08T16:20:26.529Z"
+    "title": "Exam1",
+    "status": 0,
+    "room_id": -1,
+    "teacher_id": 1,
+    "created_at": "2018-11-22T19:05:33.877+09:00",
+    "updated_at": "2018-11-22T19:05:33.877+09:00",
+    "description": null
+  },
+  ...
+```
+
+### POST `/v1/teachers/:teacher_id/exams`
+
+指定した教員に新しく試験を作成する。
+
+#### Params
+
+| Name        | Type    |
+| ----------- | ------- |
+| title       | String* |
+| description | String  |
+
+#### Return
+
+##### params is valid
+
+- single Exam's JSON created by params
+- HTTP 201
+
+##### params is invalid
+
+- `Validation failed` message
+- HTTP 400
+
+#### Example
+
+```shell
+# valid request
+$ curl -X POST -H 'Content-Type: application/json' https://HOST/v1/teachers/1/exams -d '{"title": "Temp Exam", "description": "For write document"}' | jq
+
+{
+  "id": 13,
+  "title": "Temp Exam",
+  "status": 0,
+  "room_id": -1,
+  "teacher_id": 1,
+  "created_at": "2018-11-22T20:49:56.802+09:00",
+  "updated_at": "2018-11-22T20:49:56.802+09:00",
+  "description": "For write document"
+}
+
+# invalid request
+$ curl -X POST -H 'Content-Type: application/json' https://HOST/v1/teachers/1/exams -d '{"title": "", "description": ""}'
+
+{
+  "message":"Validation failed: Title can't be blank"
+}
+```
+
+### GET `/v1/exams/:exam_id/questions`
+
+指定した試験(:exam_id)の問題情報一覧を返す。
+
+#### Params
+
+Nothing.
+
+#### Return
+
+##### Exam exists
+
+- Array of Question's JSON
+- HTTP 200
+
+##### Exam doesn't exists
+
+- `Couldn't find Exam` message
+- HTTP 400
+
+#### Example
+
+```shell
+# Exam exists
+$ curl https://HOST/v1/exams/1/questions | jq
+
+[
+  {
+    "id": 2,
+    "question_type": "Math",
+    "ans_smatex": "+-2",
+    "exam_id": 1,
+    "created_at": "2018-11-22T19:05:33.967+09:00",
+    "updated_at": "2018-11-22T19:05:33.967+09:00",
+    "latex": "\\sqrt{4}",
+    "smatex": "#{4}",
+    "ans_latex": "+-2"
   },
   {
     "id": 3,
-    "text": "3+3=",
-    "answer": "6",
-    "room_id": 1,
-    "created_at": "2018-10-08T16:20:13.666Z",
-    "updated_at": "2018-10-08T16:20:26.529Z"
-  }
-]
-```
+    "question_type": "Math",
+    "ans_smatex": "3025",
+    "exam_id": 1,
+    "created_at": "2018-11-22T19:05:33.972+09:00",
+    "updated_at": "2018-11-22T19:05:33.972+09:00",
+    "latex": "55^2",
+    "smatex": "55^2",
+    "ans_latex": "3025"
+  },
+  ...
 
+# Exam doesn't exists
+$ curl https://HOST/v1/exams/0/questions | jq
 
-### POST /rooms/:room_id/questions
-
-Submit a question in a specific room.
-
-#### Parameters
-
-| Name          | Description                       |
-| ------------- | --------------------------------- |
-| text          | A sentence of the question        |
-| answer        | The answer of the quiestion       |
-| question_type | Type of question e.g. '文章問題', '計算問題' |
-
-#### Example
-
-```
-$ curl -X POST localhost:3000/rooms/1/questions -d "text=4+4=&answer=8&question_type=計算問題" | jq
 {
-  "id": 4,
-  "text": "4+4=",
-  "answer": "8",
-  "room_id": 1,
-  "created_at": "2018-10-08T16:20:13.666Z",
-  "updated_at": "2018-10-08T16:20:26.529Z"
+  "message": "Couldn't find Exam with 'id'=0"
 }
 ```
 
+### POST `/v1/exams/:exam_id/questions`
 
-### PATCH /rooms/:room_id/questions/:id
+### GET `/v1/questions/:id`
 
-Update a specific question in a specific room.
+### PATCH/PUT `/v1/questions/:id`
 
-#### Parameters
+### PATCH/PUT `/v1/exams/:id`
 
-| Name          | Description                       |
-| ------------- | --------------------------------- |
-| text          | A sentence of the question        |
-| answer        | The answer of the quiestion       |
+### POST `/v1/exams/:id/open`
 
-#### Example
+### POST `/v1/exams/:id/close`
 
-```
-$ curl -X POST localhost:3000/rooms/1/questions/1 -d "text=5+5=&answer=10" | jq
-{
-  "id": 1,
-  "text": "5+5=",
-  "answer": "10",
-  "room_id": 1,
-  "created_at": "2018-10-08T16:20:13.666Z",
-  "updated_at": "2018-10-08T16:20:26.529Z"
-}
-```
+### GET `/v1/exmas/:exam_id/results`
+
+### GET `/v1/questions/:question_id/results`
+
+### GET `/v1/teachers/:id`
+
+### POST `/v1/teachers/`
+
+### POST `/v1/auth/teacher/login`
 
 
-### DELETE /rooms/:room_id/questions/:id
+## Student's API
 
-Remove a specific question in a specific room.
+### GET `/v1/rooms/:room_id/questions`
 
-#### Example
+### GET `/v1/rooms/:room_id/questions/:id`
 
-```
-$ curl -X POST localhost:3000/rooms/1/questions/1 | jq
-{
-  "id": 1,
-  "text": "5+5=",
-  "answer": "10",
-  "room_id": 1,
-  "created_at": "2018-10-08T16:20:13.666Z",
-  "updated_at": "2018-10-08T16:20:26.529Z"
-}
-```
+### GET `/v1/states/:student_id`
+
+### POST `/v1/states/:student_id`
+
+### POST `/v1/states/:student_id/finish` _under development_
+
+### POST `/v1/results` _under development_
 
 ## Generate request spec
 
