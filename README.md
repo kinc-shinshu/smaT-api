@@ -27,6 +27,35 @@ $ bundle exec rails g rspec:integration NAME
 $ bundle exec rspec
 ```
 
+## Table of Endpoints
+
+### Teache's API
+
+- GET `/v1/teachers/:teacher_id/exams`
+- POST `/v1/teachers/:teacher_id/exams`
+- GET `/v1/exams/:exam_id/questions`
+- GET `/v1/exams/:exam_id/questions`
+- POST `/v1/exams/:exam_id/questions`
+- GET `/v1/questions/:id`
+- PATCH/PUT `/v1/questions/:id`
+- PATCH/PUT `/v1/exams/:id`
+- POST `/v1/exams/:id/open`
+- POST `/v1/exams/:id/close`
+- GET `/v1/exmas/:exam_id/results` _under development_
+- GET `/v1/questions/:question_id/results` _under development_
+- GET `/v1/teachers/:id`
+- POST `/v1/teachers/`
+- POST `/v1/auth/teacher/login`
+
+### Student's API
+
+- GET `/v1/rooms/:room_id/questions`
+- GET `/v1/rooms/:room_id/questions/:id`
+- POST `/v1/results` _under development_
+- GET `/v1/states/:student_id`
+- POST `/v1/states/:student_id`
+- POST `/v1/states/:student_id/finish` _under development_
+
 ## Teacher's API
 
 - HOSTは`smat-api-dev.herokuapp.com`のようなAPIサーバーのホスト先URIを示す
