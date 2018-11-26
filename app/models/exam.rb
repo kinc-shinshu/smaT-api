@@ -12,7 +12,7 @@ class Exam < ApplicationRecord
   private
 
   def set_default
-    self.room_id = -1
+    self.room_id ||= -1
     self.status ||= 0
   end
 end
