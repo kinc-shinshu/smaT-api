@@ -12,6 +12,7 @@ before_install:
 
 script:
   - bundle exec rails db:setup
+  - bundle exec rspec
 
 notifications:
   slack:
