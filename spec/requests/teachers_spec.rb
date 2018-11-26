@@ -11,9 +11,15 @@ RSpec.describe 'Teachers API', type: :request do
           password_digest: '5f4dcc3b5aa765d61d8327deb882cf99'
         }
       end
+      let(:teacher) { Teacher.last }
 
-      it 'creates a new teacher' do
-        expect(json['fullname']).to eq('John Henecy')
+      it 'shows created teacher detail only id, fullname' do
+        expect(json['id']).to eq(teacher.id)
+        expect(json['fullname']).to eq(teacher.fullname)
+        # below things MUST NOT SHOW
+        expect(json['username']).to be_nil
+        expect(json['token']).to be_nil
+        expect(json['password_digest']).to be_nil
       end
 
       it 'returns status code 200' do
@@ -44,8 +50,13 @@ RSpec.describe 'Teachers API', type: :request do
     context 'when token is taken' do
       before { get v1_teacher_path(id), headers: headers }
 
-      it 'can show teacher detail' do
+      it 'can show teacher detail only id, fullname' do
+        expect(json['id']).to eq(teacher.id)
         expect(json['fullname']).to eq(teacher.fullname)
+        # belo things MUST NOT SHOW
+        expect(json['username']).to be_nil
+        expect(json['token']).to be_nil
+        expect(json['password_digest']).to be_nil
       end
 
       it 'returns status code 200' do
