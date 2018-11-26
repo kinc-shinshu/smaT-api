@@ -3,9 +3,21 @@ rvm:
   - 2.5.1
 cache: bundler
 
+branches:
+  only:
+    - master
+
 before_install:
   - gem update --system
 
 script:
   - bundle exec rails db:setup
-  - bundle exec rspec
+
+notifications:
+  slack:
+    secure: eq+RjWg0eCSaCm997DN0A1R1onaqTt76JyTdHAu9xwYWBvemrWHB2/EJQff1WotXzilTTpx/kKHNsoY1myeMTWyl1WDF0IIcEfF516mVRWsbKSXiBE++wYHtC4fJpSQxYaC8IGuts2Csuj48jqkKPFAQtO3AINs9SA39icAFA0RlJ7eyWI5uhx9Zhh5T6eVSXfpxVSAmsbGIlJLktfycCnNjOP/eoDIjnjLnZXF+lT6Z9dzC8V2o8bJUcCdG9VGUmzmUvusbsfuA2z+evNZwUxQFwBJ1p2CDfawy905UT2fYbNp0v7OIDd5dZXqGmXhQY0LhThT93tpnGpw5Uuv/2KpqUJlsgRzgHg495BjHZol1Vq2kH6Z8KTI+YP7aWdev4f2W83PdPzzn9S4IcWBhtyCq3WPRJ8pjrtmYFtg73O7l38Y+apYoPQofN3dHUQuPdt+aY9dmMFqC0qE0E+A2vuOqqkHJ+F8gomBMi24r3nYfe69iYbu9crAYv34lqad2YwCZVzeTm640gwEugRCF/JCMPOFVz37ls9O2kL5tPZ7m3ipHx+NEmWBDpVH1PM8xrrKvzxGyqGZw42mb/8VgoSwx74ZPWC09Ut1f4IlyV8TzKQe3QOD988n/8jQ3GZwp07isE3J0XGuB+6qajdPbcsWXe5HH4yctc3U6oYCqme8=
+
+# until presentation, do not use auto-deploy
+# deploy:
+#   api_key:
+#     secure: Tha8eQyImaILxElL1BDYiEVdmeXfddgNs+O4xfhX9t8Q6RcbQDIfpyzztZG9BdIFFtAr93Ul4n4AksN+CsuPPjgNauQMQeOrkEHT02ZbB9tEtU6ImlfKOMFMvoL11GITP7fzCSu227zOSDJ1gP754/N735o3Ve7kRKXZkYenzJFawl83xhbeQEiu5yvj0XgpTkl99Qagp1I4LJUc6uUwyv2IHFYqvIXjwCPPaRkazvqh4yw1H28BZpetncNjtCq3Pu7zTkVnNgq8CsRXt87Jd0VnCgNIMi9Onsl5NWSGd3D4P+uDOwFQp6PVT0SkoH7B9rZTjOx7jo1rtZFhvK4HGvXFuVGxD251tK8sEVHaRUg0foJh80pp5avIHt/pVKPObc3MSWB+BmFzjuPBXapAs9B4lZH4iPYiVF7TPqwQcHCbGhDyvUL6GVQw/cl05PVgKLyXUoAUBGoGXzfurrlD4EQX/HigeWSGGsj5TI+3YuvktT9gClwOSZ4b5OglBMoR5AsnvJfvEtqF/wxTej8J+DCnUrA1u83zohJUxvZwOyoJPSJqi+U3MlIkdpORRE/RxlgNBQEpWOuvBYcHoz7Ta6trcdptEuZapjM1NTjGTaSNlsiM7bDRUDsY8d77ygv1l/Hkk2bVkyGs0/qyHpyozV60JNa/5l61FdNOTnaj3MQ=
