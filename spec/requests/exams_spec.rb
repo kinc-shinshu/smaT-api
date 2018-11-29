@@ -52,6 +52,24 @@ RSpec.describe 'Exams', type: :request do
       end
     end
 
+    context 'when request is valid (if description doesn\'t provide)' do
+      let(:valid_params) { { title: 'No Description Exam' } }
+      before { post v1_teacher_exams_path(teacher_id), params: valid_params }
+
+      it 'returns created exam' do
+        expect(json['title']).to eq(valid_params[:title])
+        expect(json['description']).to eq('')
+      end
+
+      it 'creates "close" exam' do
+        expect(json['status']).to eq(0)
+      end
+
+      it 'returns status code 201' do
+        expect(response).to have_http_status(201)
+      end
+    end
+
     context 'when params not specified invalid' do
       before { post v1_teacher_exams_path(teacher_id), params: {} }
 
