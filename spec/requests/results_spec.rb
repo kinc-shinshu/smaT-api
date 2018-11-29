@@ -64,8 +64,10 @@ RSpec.describe 'Results API', type: :request do
   describe 'GET /v1/exams/:exam_id/results' do
     context 'when exam exists' do
       before { get v1_exam_results_path(exam_id) }
-      it 'returns all results through its questions' do
-        expect(json).to eq(JSON.parse(exam.questions.includes(:results).to_json))
+      it 'returns all results of specified exam' do
+        questions = exam.questions.includes(:results)
+        results = questions.reduce([]) { |res, que| res + que.results.to_a }
+        expect(json).to eq(JSON.parse(results.to_json))
       end
 
       it 'returns status code 200' do

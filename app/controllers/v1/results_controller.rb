@@ -1,7 +1,9 @@
 class V1::ResultsController < ApplicationController
   def exam_index
     exam = Exam.find(params[:exam_id])
-    json_response(exam.questions.includes(:results))
+    questions = exam.questions.includes(:results)
+    results = questions.reduce([]) { |res, que| res + que.results.to_a }
+    json_response(results)
   end
 
   def question_index
@@ -19,14 +21,17 @@ class V1::ResultsController < ApplicationController
       q_id, judge, challenge = parse_result_params
       restrict_invalid_request(q_id, judge, challenge)
       q_id.each_with_index do |id, i|
-        Result.create!(judge: judge[i], challenge: challenge[i], question: Question.find(id))
+        Result.create!(
+          judge: judge[i],
+          challenge: challenge[i],
+          question: Question.find(id)
+        )
       end
     end
     json_response({ message: 'Results submitted.' }, :created)
   end
 
-  def destroy
-  end
+  def destroy; end
 
   private
 
