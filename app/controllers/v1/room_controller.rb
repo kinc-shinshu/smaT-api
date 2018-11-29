@@ -2,7 +2,7 @@ class V1::RoomController < ApplicationController
   before_action :validate_question_index, only: :questions_show
 
   def questions_index
-    questions = Exam.where(status: 1).find_by!(room_id: params[:room_id]).questions
+    questions = Exam.where(status: 1).find_by!(room_id: params[:room_id]).questions.order(:id)
     json_response(questions)
   end
 
