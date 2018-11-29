@@ -2,8 +2,8 @@ class V1::ExamsController < ApplicationController
   ROOM_ID_GROUP = (100..999).to_a.freeze
 
   def index
-    room = Exam.all
-    render json: room
+    teacher = Teacher.find(params[:teacher_id])
+    json_response(teacher.exams.order(:id))
   end
 
   def show

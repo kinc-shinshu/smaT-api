@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Exams', type: :request do
   let(:teacher) { create(:teacher) }
   let(:teacher_id) { teacher.id }
-  let(:exam) { teacher.exams.first }
+  let(:exams) { teacher.exams }
+  let(:exam) { exams.first }
   let(:exam_id) { exam.id }
 
   describe 'GET /v1/exams/:id' do
@@ -22,6 +23,33 @@ RSpec.describe 'Exams', type: :request do
     context 'when exam does not exist' do
       let(:exam_id) { 0 }
       before { get v1_exam_path(exam_id) }
+
+      it "returns 'Couldn't find ...' message" do
+        expect(json['message']).to match(/Couldn't find/)
+      end
+
+      it 'returns status code 400' do
+        expect(response).to have_http_status(400)
+      end
+    end
+  end
+
+  describe 'GET /v1/teachers/:teacher_id/exams' do
+    context 'when teacher exists' do
+      before { get v1_teacher_exams_path(teacher_id) }
+
+      it 'returns all exams created by specified teacher' do
+        expect(json).to eq(JSON.parse(exams.to_json))
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when teacher does not exist' do
+      let(:teacher_id) { 0 }
+      before { get v1_teacher_exams_path(teacher_id) }
 
       it "returns 'Couldn't find ...' message" do
         expect(json['message']).to match(/Couldn't find/)
