@@ -14,5 +14,6 @@ class Exam < ApplicationRecord
   def set_default
     self.room_id ||= -1
     self.status ||= 0
+    self.description ||= ''
   end
 end
