@@ -1,6 +1,6 @@
 class V1::QuestionsController < ApplicationController
   def index
-    questions = Exam.find(params[:exam_id]).questions
+    questions = Exam.find(params[:exam_id]).questions.order(:id)
     json_response(questions)
   end
 
