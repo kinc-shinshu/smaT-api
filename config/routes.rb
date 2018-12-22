@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :v1 do
     # teacher client's resource routing
-    with_options(except: %i[new edit], shallow: true) do |opt|
+    with_options(except: %i[new edit], shallow: true, format: 'json') do |opt|
       opt.resources :teachers do
         opt.resources :exams do
           opt.resources :questions
