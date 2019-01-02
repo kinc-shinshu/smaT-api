@@ -21,9 +21,5 @@ Rails.application.routes.draw do
     # student client's resource routing
     get 'rooms/:room_id/questions',     to: 'room#questions_index', as: 'room_questions'
     get 'rooms/:room_id/questions/:id', to: 'room#questions_show',  as: 'room_question_single'
-
-    get  'states/:student_id', to: 'states#show', as: 'state'
-    post 'states/:student_id', to: 'states#update'
-    post 'states/:student_id/finish', to: 'states#finish', as: 'state_finish'
   end
 end
