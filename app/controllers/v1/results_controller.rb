@@ -1,14 +1,8 @@
 class V1::ResultsController < ApplicationController
-  def exam_index
+  # show all results which is selected exam with question
+  def index
     exam = Exam.find(params[:exam_id])
-    questions = exam.questions.includes(:results)
-    results = questions.reduce([]) { |res, que| res + que.results.to_a }
-    json_response(results)
-  end
-
-  def question_index
-    question = Question.find(params[:question_id])
-    json_response(question.results)
+    @questions = exam.questions.includes(:results)
   end
 
   # def show
@@ -28,7 +22,7 @@ class V1::ResultsController < ApplicationController
         )
       end
     end
-    json_response({ message: 'Results submitted.' }, :created)
+    render json: { message: 'Results submitted.' }, status: :created
   end
 
   def destroy; end

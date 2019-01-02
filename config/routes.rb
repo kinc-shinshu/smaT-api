@@ -10,8 +10,7 @@ Rails.application.routes.draw do
     end
 
     # non-RESTful routings 'Result'
-    get  'exams/:exam_id/results', to: 'results#exam_index', as: 'exam_results'
-    get  'questions/:question_id/results', to: 'results#question_index', as: 'question_results'
+    get  'exams/:exam_id/results', to: 'results#index', as: 'exam_results'
     post 'results', to: 'results#create'
 
     post 'auth/teacher/login', to: 'auth#teacher_login'
