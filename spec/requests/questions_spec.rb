@@ -14,7 +14,8 @@ RSpec.describe 'Questions', type: :request do
 
       # questions is ActiveRecord::CollectionProxy
       it 'returns all questions of exam' do
-        expect(json).to eq(JSON.parse(questions.to_json(except: %i[exam_id created_at updated_at])))
+        option = { except: %i[exam_id created_at updated_at] }
+        expect(json).to eq(questions.as_json(option))
       end
 
       it 'returns status code 200' do
@@ -76,7 +77,8 @@ RSpec.describe 'Questions', type: :request do
       before { get v1_question_path(question_id) }
 
       it 'returns specified question' do
-        expect(json).to eq(JSON.parse(question.to_json(except: %i[exam_id created_at updated_at])))
+        option = { except: %i[exam_id created_at updated_at] }
+        expect(json).to eq(question.as_json(option))
       end
 
       it 'returns status code 200' do

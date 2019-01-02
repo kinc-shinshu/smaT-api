@@ -12,7 +12,8 @@ RSpec.describe 'Exams', type: :request do
       before { get v1_teacher_exams_path(teacher_id) }
 
       it 'returns all exams created by specified teacher' do
-        expect(json).to eq(JSON.parse(exams.to_json(except: %i[created_at updated_at teacher_id])))
+        option = { except: %i[teacher_id created_at updated_at] }
+        expect(json).to eq(exams.as_json(option))
       end
 
       it 'returns status code 200' do
@@ -39,7 +40,8 @@ RSpec.describe 'Exams', type: :request do
       before { get v1_exam_path(exam_id) }
 
       it 'returns specified exam' do
-        expect(json).to eq(JSON.parse(exam.to_json(except: %i[created_at updated_at teacher_id])))
+        option = { except: %i[created_at updated_at teacher_id] }
+        expect(json).to eq(exam.as_json(option))
       end
 
       it 'returns status code 200' do
