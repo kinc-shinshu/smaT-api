@@ -1,12 +1,12 @@
 class V1::QuestionsController < ApplicationController
   def index
     @questions = Exam.find(params[:exam_id]).questions.order(:id)
-    # json_response(questions)
+    render status: :ok
   end
 
   def show
     @question = Question.find(params[:id])
-    # json_response(question)
+    render status: :ok
   end
 
   def create
@@ -23,7 +23,7 @@ class V1::QuestionsController < ApplicationController
 
   def destroy
     Question.find(params[:id]).destroy
-    json_response({}, :no_content)
+    render status: :no_content
   end
 
   private
