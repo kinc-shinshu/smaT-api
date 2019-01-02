@@ -42,7 +42,6 @@ $ bundle exec rspec
 - POST `/v1/exams/:id/open`
 - POST `/v1/exams/:id/close`
 - GET `/v1/exmas/:exam_id/results` _under development_
-- GET `/v1/questions/:question_id/results` _under development_
 - GET `/v1/teachers/:id`
 - POST `/v1/teachers/`
 - POST `/v1/auth/teacher/login`
@@ -534,30 +533,6 @@ Nothing.
 - HTTP 200
 
 ##### exam doesn't exist
-
-- `Couldn't find` message
-- HTTP 400
-
-#### Example
-
-Add in the future...
-
-### GET `/v1/questions/:question_id/results` _under development_
-
-指定した問題における結果一覧を返す。
-
-#### Params
-
-Nothing.
-
-#### Returns
-
-##### question exists
-
-- Array of Result's JSON
-- HTTP 200
-
-##### question doesn't exist
 
 - `Couldn't find` message
 - HTTP 400
