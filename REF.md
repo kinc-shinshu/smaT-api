@@ -9,3 +9,5 @@
 - [ruby on rails - :except options in routes that contain collections and members not working - Stack Overflow](https://stackoverflow.com/questions/6462815/except-options-in-routes-that-contain-collections-and-members-not-working)
 - [activerecord - Rails create or update magic? - Stack Overflow](https://stackoverflow.com/questions/18747062/rails-create-or-update-magic#18747148)
 - [MissingTemplate (Rails 5.0.0.1) · Issue #358 · rails/jbuilder](https://github.com/rails/jbuilder/issues/358)
+- [ActiveModel::Serializers::JSON](https://api.rubyonrails.org/classes/ActiveModel/Serializers/JSON.html#method-i-as_json)
+- [ruby - Rails Object to hash - Stack Overflow](https://stackoverflow.com/questions/3872236/rails-object-to-hash)
