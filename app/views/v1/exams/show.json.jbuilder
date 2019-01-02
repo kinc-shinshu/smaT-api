@@ -1,1 +1,1 @@
-json.partial! "v1/exams/exam", exam: @exam
+json.partial! 'v1/exams/exam', exam: @exam
