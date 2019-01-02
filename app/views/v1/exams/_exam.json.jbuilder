@@ -1,1 +1,1 @@
-json.extract! exam, :id, :title, :description
+json.extract! exam, :id, :title, :description, :status, :room_id

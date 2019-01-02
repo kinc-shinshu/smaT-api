@@ -3,12 +3,13 @@ class V1::ExamsController < ApplicationController
 
   def index
     teacher = Teacher.find(params[:teacher_id])
-    json_response(teacher.exams.order(:id))
+    @exams = teacher.exams.order(:id)
+    render status: :ok
   end
 
   def show
-    exam = Exam.find(params[:id])
-    json_response(exam)
+    @exam = Exam.find(params[:id])
+    render status: :ok
   end
 
   def create

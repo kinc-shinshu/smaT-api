@@ -7,12 +7,12 @@ RSpec.describe 'Exams', type: :request do
   let(:exam) { exams.first }
   let(:exam_id) { exam.id }
 
-  describe 'GET /v1/exams/:id' do
-    context 'when exam exists' do
-      before { get v1_exam_path(exam_id) }
+  describe 'GET /v1/teachers/:teacher_id/exams' do
+    context 'when teacher exists' do
+      before { get v1_teacher_exams_path(teacher_id) }
 
-      it 'returns specified exam' do
-        expect(json).to eq(JSON.parse(exam.to_json))
+      it 'returns all exams created by specified teacher' do
+        expect(json).to eq(JSON.parse(exams.to_json(except: %i[created_at updated_at teacher_id])))
       end
 
       it 'returns status code 200' do
@@ -20,9 +20,9 @@ RSpec.describe 'Exams', type: :request do
       end
     end
 
-    context 'when exam does not exist' do
-      let(:exam_id) { 0 }
-      before { get v1_exam_path(exam_id) }
+    context 'when teacher does not exist' do
+      let(:teacher_id) { 0 }
+      before { get v1_teacher_exams_path(teacher_id) }
 
       it "returns 'Couldn't find ...' message" do
         expect(json['message']).to match(/Couldn't find/)
@@ -34,12 +34,12 @@ RSpec.describe 'Exams', type: :request do
     end
   end
 
-  describe 'GET /v1/teachers/:teacher_id/exams' do
-    context 'when teacher exists' do
-      before { get v1_teacher_exams_path(teacher_id) }
+  describe 'GET /v1/exams/:id' do
+    context 'when exam exists' do
+      before { get v1_exam_path(exam_id) }
 
-      it 'returns all exams created by specified teacher' do
-        expect(json).to eq(JSON.parse(exams.to_json))
+      it 'returns specified exam' do
+        expect(json).to eq(JSON.parse(exam.to_json(except: %i[created_at updated_at teacher_id])))
       end
 
       it 'returns status code 200' do
@@ -47,9 +47,9 @@ RSpec.describe 'Exams', type: :request do
       end
     end
 
-    context 'when teacher does not exist' do
-      let(:teacher_id) { 0 }
-      before { get v1_teacher_exams_path(teacher_id) }
+    context 'when exam does not exist' do
+      let(:exam_id) { 0 }
+      before { get v1_exam_path(exam_id) }
 
       it "returns 'Couldn't find ...' message" do
         expect(json['message']).to match(/Couldn't find/)
