@@ -11,19 +11,19 @@ class V1::QuestionsController < ApplicationController
 
   def create
     exam = Exam.find(params[:exam_id])
-    question = exam.questions.create!(question_params)
-    json_response(question, :created)
+    @question = exam.questions.create!(question_params)
+    render :show, status: :created
   end
 
   def update
-    question = Question.find(params[:id])
-    question.update!(question_params)
-    json_response(question)
+    @question = Question.find(params[:id])
+    @question.update!(question_params)
+    render :show
   end
 
   def destroy
     Question.find(params[:id]).destroy
-    render status: :no_content
+    head :no_content
   end
 
   private

@@ -26,7 +26,7 @@ class V1::ExamsController < ApplicationController
 
   def destroy
     Exam.find(params[:id]).destroy
-    json_response({}, :no_content)
+    head :no_content
   end
 
   # status: 0 means closed(not open) exam
