@@ -169,7 +169,7 @@ RSpec.describe 'Exams', type: :request do
     context 'when exam exists' do
       let(:close_exam) { create(:close_exam) }
       let(:exam_id) { close_exam.id }
-      before { post v1_exam_open_path(exam_id) }
+      before { post v1_exam_open_path(exam_id), params: {}, as: :json }
 
       it 'assigns room_id to specified exam' do
         expect(json['room_id']).not_to eq(-1)
@@ -214,7 +214,7 @@ RSpec.describe 'Exams', type: :request do
 
   describe 'POST /v1/exams/:id/close' do
     context 'when exam exists' do
-      before { post v1_exam_close_path(exam_id) }
+      before { post v1_exam_close_path(exam_id), params: {}, as: :json }
 
       it 'assigns room_id = -1 to specified exam' do
         expect(json['room_id']).to eq(-1)
