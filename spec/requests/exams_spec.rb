@@ -7,12 +7,13 @@ RSpec.describe 'Exams', type: :request do
   let(:exam) { exams.first }
   let(:exam_id) { exam.id }
 
-  describe 'GET /v1/exams/:id' do
-    context 'when exam exists' do
-      before { get v1_exam_path(exam_id) }
+  describe 'GET /v1/teachers/:teacher_id/exams' do
+    context 'when teacher exists' do
+      before { get v1_teacher_exams_path(teacher_id) }
 
-      it 'returns specified exam' do
-        expect(json).to eq(JSON.parse(exam.to_json))
+      it 'returns all exams created by specified teacher' do
+        option = { except: %i[teacher_id created_at updated_at] }
+        expect(json).to eq(exams.as_json(option))
       end
 
       it 'returns status code 200' do
@@ -20,9 +21,9 @@ RSpec.describe 'Exams', type: :request do
       end
     end
 
-    context 'when exam does not exist' do
-      let(:exam_id) { 0 }
-      before { get v1_exam_path(exam_id) }
+    context 'when teacher does not exist' do
+      let(:teacher_id) { 0 }
+      before { get v1_teacher_exams_path(teacher_id) }
 
       it "returns 'Couldn't find ...' message" do
         expect(json['message']).to match(/Couldn't find/)
@@ -34,12 +35,13 @@ RSpec.describe 'Exams', type: :request do
     end
   end
 
-  describe 'GET /v1/teachers/:teacher_id/exams' do
-    context 'when teacher exists' do
-      before { get v1_teacher_exams_path(teacher_id) }
+  describe 'GET /v1/exams/:id' do
+    context 'when exam exists' do
+      before { get v1_exam_path(exam_id) }
 
-      it 'returns all exams created by specified teacher' do
-        expect(json).to eq(JSON.parse(exams.to_json))
+      it 'returns specified exam' do
+        option = { except: %i[created_at updated_at teacher_id] }
+        expect(json).to eq(exam.as_json(option))
       end
 
       it 'returns status code 200' do
@@ -47,9 +49,9 @@ RSpec.describe 'Exams', type: :request do
       end
     end
 
-    context 'when teacher does not exist' do
-      let(:teacher_id) { 0 }
-      before { get v1_teacher_exams_path(teacher_id) }
+    context 'when exam does not exist' do
+      let(:exam_id) { 0 }
+      before { get v1_exam_path(exam_id) }
 
       it "returns 'Couldn't find ...' message" do
         expect(json['message']).to match(/Couldn't find/)
@@ -169,7 +171,7 @@ RSpec.describe 'Exams', type: :request do
     context 'when exam exists' do
       let(:close_exam) { create(:close_exam) }
       let(:exam_id) { close_exam.id }
-      before { post v1_exam_open_path(exam_id) }
+      before { post v1_exam_open_path(exam_id), params: {}, as: :json }
 
       it 'assigns room_id to specified exam' do
         expect(json['room_id']).not_to eq(-1)
@@ -214,7 +216,7 @@ RSpec.describe 'Exams', type: :request do
 
   describe 'POST /v1/exams/:id/close' do
     context 'when exam exists' do
-      before { post v1_exam_close_path(exam_id) }
+      before { post v1_exam_close_path(exam_id), params: {}, as: :json }
 
       it 'assigns room_id = -1 to specified exam' do
         expect(json['room_id']).to eq(-1)

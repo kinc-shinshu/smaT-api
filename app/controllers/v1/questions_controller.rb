@@ -1,29 +1,29 @@
 class V1::QuestionsController < ApplicationController
   def index
-    questions = Exam.find(params[:exam_id]).questions.order(:id)
-    json_response(questions)
+    @questions = Exam.find(params[:exam_id]).questions.order(:id)
+    render status: :ok
   end
 
   def show
-    question = Question.find(params[:id])
-    json_response(question)
+    @question = Question.find(params[:id])
+    render status: :ok
   end
 
   def create
     exam = Exam.find(params[:exam_id])
-    question = exam.questions.create!(question_params)
-    json_response(question, :created)
+    @question = exam.questions.create!(question_params)
+    render :show, status: :created
   end
 
   def update
-    question = Question.find(params[:id])
-    question.update!(question_params)
-    json_response(question)
+    @question = Question.find(params[:id])
+    @question.update!(question_params)
+    render :show
   end
 
   def destroy
     Question.find(params[:id]).destroy
-    json_response({}, :no_content)
+    head :no_content
   end
 
   private

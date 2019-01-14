@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Teachers API', type: :request do
+RSpec.describe 'Teachers', type: :request do
   describe 'POST /v1/teachers' do
     context 'when request is valid' do
       before { post v1_teachers_path, params: valid_params }
@@ -22,8 +22,8 @@ RSpec.describe 'Teachers API', type: :request do
         expect(json['password_digest']).to be_nil
       end
 
-      it 'returns status code 200' do
-        expect(response).to have_http_status(200)
+      it 'returns status code 201' do
+        expect(response).to have_http_status(201)
       end
     end
 

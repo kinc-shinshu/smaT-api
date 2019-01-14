@@ -45,15 +45,6 @@ ActiveRecord::Schema.define(version: 2018_11_19_113441) do
     t.index ["question_id"], name: "index_results_on_question_id"
   end
 
-  create_table "states", force: :cascade do |t|
-    t.integer "student_id"
-    t.string "q_id"
-    t.string "judge"
-    t.string "challenge"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "teachers", force: :cascade do |t|
     t.string "fullname"
     t.string "username"

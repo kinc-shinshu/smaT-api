@@ -8,10 +8,11 @@ RSpec.describe 'Rooms', type: :request do
 
   describe 'GET /v1/rooms/:room_id/questions' do
     context 'when room(opend exam) exists' do
-      before { get v1_room_questions_path(open_exam_number) }
+      before { get v1_room_questions_path(open_exam_number), as: :json }
 
       it 'returns all questions from Exam.find_by(room_id: params[:room_id])' do
-        expect(json).to eq(JSON.parse(open_exam.questions.to_json))
+        option = { except: %i[exam_id created_at updated_at] }
+        expect(json).to eq(open_exam.questions.as_json(option))
       end
 
       it 'returns status code 200' do
@@ -46,10 +47,11 @@ RSpec.describe 'Rooms', type: :request do
 
   describe 'GET /v1/rooms/:room_id/questions/:id' do
     context 'when question exists(id: 1)' do
-      before { get v1_room_question_single_path(room_id: open_exam_number, id: 1) }
+      before { get v1_room_question_single_path(room_id: open_exam_number, id: 1), as: :json }
 
       it 'returns first question in exam' do
-        expect(json).to eq(JSON.parse(open_exam.questions.first.to_json))
+        option = { except: %i[exam_id created_at updated_at] }
+        expect(json).to eq(open_exam.questions.first.as_json(option))
       end
 
       it 'returns status code 200' do

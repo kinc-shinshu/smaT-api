@@ -4,13 +4,12 @@ class V1::TeachersController < ApplicationController
 
   # show dashboard...?
   def show
-    teacher = Teacher.find(params[:id])
-    json_response(teacher.to_safe_response)
+    @teacher = Teacher.find(params[:id])
   end
 
   def create
-    teacher = Teacher.create!(create_params)
-    json_response(teacher.to_safe_response)
+    @teacher = Teacher.create!(create_params)
+    render :show, status: :created
   end
 
   private
